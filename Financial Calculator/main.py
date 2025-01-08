@@ -1,15 +1,23 @@
 #Nicholas Larsen 2nd Period Financial Calculator
 
 #What do you want to do?
-print("Hello! Welcome to your financial calculator!\n What would you like to do?\n1: Budget allocator\n2: Compound interest calculator\n3:Saving time\n4:Sales prices\n5:Tip calculator\nChoose:")
+choice = input("Hello! Welcome to your financial calculator!\n What would you like to do?\n1: Budget allocator\n2: Compound interest calculator\n3:Saving time\n4:Sales prices\n5:Tip calculator\nChoose:")
 
-#Check my budget allocation
+#Budget allocation
 
-#how much do you make a week?
+#how much do you make per week?
 #How much do you spend on food per week?
 #How much do you spend on entertainment per week?
 #How much do you spend on home expenses per week?
 #How much do you save per week?
+
+#Calculate compound interest
+
+#What is your original deposit?
+#What is your yearly interest rate?
+#How long do you want to wait?
+#Calculations
+#Print final balance
 
 #How long will it take to save?
 
@@ -27,18 +35,10 @@ print("Hello! Welcome to your financial calculator!\n What would you like to do?
 #Calculations
 #Print final price
 
-#Calculate compound interest
-
-#What is your original deposit?
-#What is your yearly interest rate?
-#How long do you wnat to wait?
-#Calculations
-#Print final balance
-
 #Calculate a tip
 
 #How much is the original cost?
-#How much do you want to tip?
+#What percentage do you want to tip?
 #calculations
 #print final price
 
