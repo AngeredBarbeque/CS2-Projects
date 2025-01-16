@@ -1,14 +1,16 @@
-#creates empty list to store items later
 library = []
 
+#adds new items to the library
 def add():
     item = input("\nWhat would you like to add to your library?")
     if item != "e":
-        library.append(item)
+        #!!FIX THIS!!
         print(library)
         add()
     else:
         return
+
+#removes items from the library
 def rmove():
     item = input("\nWhat would you like to remove from your library?")
     if item != "e":
@@ -20,6 +22,8 @@ def rmove():
         rmove()
     else:
         return
+
+#searches for items withing the library
 def search():
     item = input("\nWhat would you like to search for in your library?")
     if item != 'e':
@@ -29,8 +33,8 @@ def search():
             print("\nSorry, that doesn't seem to be in your library.")
     else:
         return
+
 def main():
-    #Welcomes and explains to the user what this project does
     print("\nHello! Welcome to your perosnal library!\nThis program will help you manage a collection of books.\nIf at any point you want to exit, enter 'e'.\n")
     while True:
         choice = input("\nWhat would you like to do?\n1:Add items to your library.\n2:Remove items from your library.\n3:Search for an item in your library.\nChoose:")
