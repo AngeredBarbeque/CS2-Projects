@@ -9,22 +9,22 @@ def add(library):
         genre = input("\nWhat genre is the book?")
         library.append((book, author, pages, genre))
         print(library)
-        add(library)
+        return
     else:
         return
 
 #removes items from the library
 def rmove(library):
-    item = input("\nWhat would you like to remove from your library?")
+    item = input("\nWhat would you like to remove from your library?").lower().strip()
     if item != "e":
         for i in library:
             for attribute in i:
                 if attribute == item:
                     library.remove(i)
                     print("Got it!")
-                    rmove(library)
+                    return
         print("That book doesn't exist.")
-        rmove(library)
+        return
     else:
         return
 
@@ -32,13 +32,16 @@ def rmove(library):
 def search(library):
     item = input("\nWhat would you like to search for in your library?(Title, length, author, or genre)")
     if item != 'e':
+        #checks each book in library
         for i in library:
+            #checks each attribute of the book
             for attribute in i:
                 if attribute == item:
+                    #prints the attributes of the book and the spot in the list
                     print("\nFound it! The book is", i[0], "by", i[1] +',', i[2], "pages long, and a", i[3], "book.\nIt is item", library.index(i)+1, "in your library.")
-                    search(library)
+                    return
         print("Sorry, I couldn't find that book.")
-        search(library)
+        return
     else:
         return
 
