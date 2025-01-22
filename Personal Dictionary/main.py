@@ -30,7 +30,7 @@ def rmove(library):
 
 #searches for items within the library
 def search(library):
-    item = input("\nWhat would you like to search for in your library?(Title, length, author, or genre)")
+    item = input("\nWhat would you like to search for in your library? You can search using the book's name, genre, author, or page number:")
     if item != 'e':
         #checks each book in library
         for i in library:
@@ -44,7 +44,7 @@ def search(library):
         return
     else:
         return
-
+#main function that allows the user to choose what they want to do
 def main():
     print("\nHello! Welcome to your perosnal library!\nThis program will help you manage a collection of books.\nIf at any point you want to exit, enter 'e'.\n")
     while True:
