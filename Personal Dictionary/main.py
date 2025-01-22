@@ -15,7 +15,7 @@ def add(library):
 
 #removes items from the library
 def rmove(library):
-    item = input("\nWhat would you like to remove from your library?").lower().strip()
+    item = input("\nWhat would you like to remove from your library?")
     if item != "e":
         for i in library:
             for attribute in i:
