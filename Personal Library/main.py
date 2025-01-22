@@ -8,14 +8,14 @@ def add(library):
         pages = input("\nHow many pages long is the book?")
         genre = input("\nWhat genre is the book?")
         library.append((book, author, pages, genre))
-        print(library)
+        show(library)
         return
     else:
         return
 
 #removes items from the library
 def rmove(library):
-    item = input("\nWhat would you like to remove from your library?")
+    item = input("\nWhat would you like to remove from your library? You can choose a book with its name, genre, author, or page number:\n")
     if item != "e":
         for i in library:
             for attribute in i:
@@ -30,7 +30,7 @@ def rmove(library):
 
 #searches for items within the library
 def search(library):
-    item = input("\nWhat would you like to search for in your library? You can search using the book's name, genre, author, or page number:")
+    item = input("\nWhat would you like to search for in your library? You can search using the book's name, genre, author, or page number:\n")
     if item != 'e':
         #checks each book in library
         for i in library:
@@ -44,9 +44,18 @@ def search(library):
         return
     else:
         return
+
+#A function to print the library in a more appealing way
+def show(library):
+    for item in library:
+        print(f"{item[0]} by {item[1]}, a {item[3]} book, and {item[2]} pages long.")
+
+
+
 #main function that allows the user to choose what they want to do
 def main():
     print("\nHello! Welcome to your perosnal library!\nThis program will help you manage a collection of books.\nIf at any point you want to exit, enter 'e'.\n")
+    #loops so that the program runs until the user tells it to stop
     while True:
         choice = input("\nWhat would you like to do?\n1:Add items to your library.\n2:Remove items from your library.\n3:Search for an item in your library.\n4:View Library\nChoose:")
         if choice == '1':
@@ -56,7 +65,7 @@ def main():
         elif choice == '3':
             search(library)
         elif choice == '4':
-            print(library)
+            show(library)
         elif choice == 'e':
             print("\nGoodbye!")
             exit()
