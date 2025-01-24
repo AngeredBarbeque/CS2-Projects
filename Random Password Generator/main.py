@@ -1,7 +1,6 @@
 #Nicholas Larsen Password Generator
 import random
-password = '23d~'
-
+password = []
 #checks if the password has any capital letters in it by matching the ord value of each character to the ord value of capital letters
 def has_caps(password):
     for i in password:
@@ -40,11 +39,49 @@ def has_spec(password):
             return True
     return False
 
-def main():
-    print("Welcome to your random number generator!")
-    nums = !!!CONTINUE HERE!!!
+#Creates the password by adding random characters and then checking if it meets all requirements.
+def gen_pass(nums, caps, lows, spec, length, password):
+    while True:
+        password = []
+        for i in range(length):
+            password.append(chr(random.randint(32, 126)))
+            DOESNT WORK WITH CHECKING CONTINUE HERE
+        if nums == 'y':
+            if has_nums(password):
+                pass
+            else:
+                continue
+        if caps == 'y':
+            if has_caps(password):
+                pass
+            else:
+                continue
+        if lows == 'y':
+            if has_lower(password):
+                pass
+            else:
+                continue
+        if spec == 'y':
+            if has_spec(password):
+                pass
+            else:
+                continue
+        password = ''.join(password)
+        return password
+        
 
-print(has_caps(password))
-print(has_lower(password))
-print(has_nums(password))
-print(has_spec(password))
+
+def main():
+    #determines the requirements for the random passwords
+    print("Welcome to your random password generator!")
+    nums = input("Do you want your password to include numbers? y/n:\n")
+    caps = input("Do you want your password to include capital letters? y/n:\n")
+    lows = input("Do you want your password to include lowercase letters? y/n:\n")
+    spec = input("Do you want your password to include special characters? y/n:\n")
+    length = int(input("How long do you want your password to be?"))
+    times = int(input("How many passwords do you want generated?"))
+    #generates a password as many times as the user asked
+    for i in range(times):
+        print(gen_pass(nums, caps, lows, spec, length, password))
+main()
+
