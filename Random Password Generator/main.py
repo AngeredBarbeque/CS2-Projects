@@ -45,27 +45,46 @@ def gen_pass(nums, caps, lows, spec, length, password):
         password = []
         for i in range(length):
             password.append(chr(random.randint(32, 126)))
-            DOESNT WORK WITH CHECKING CONTINUE HERE
         if nums == 'y':
             if has_nums(password):
                 pass
             else:
                 continue
+        else:
+            if has_nums(password):
+                continue
+            else:
+                pass
         if caps == 'y':
             if has_caps(password):
                 pass
             else:
                 continue
+        else:
+            if has_caps(password):
+                continue
+            else:
+                pass
         if lows == 'y':
             if has_lower(password):
                 pass
             else:
                 continue
+        else:
+            if has_lower(password):
+                continue
+            else:
+                pass
         if spec == 'y':
             if has_spec(password):
                 pass
             else:
                 continue
+        else:
+            if has_spec(password):
+                continue
+            else:
+                pass
         password = ''.join(password)
         return password
         
@@ -73,15 +92,36 @@ def gen_pass(nums, caps, lows, spec, length, password):
 
 def main():
     #determines the requirements for the random passwords
-    print("Welcome to your random password generator!")
-    nums = input("Do you want your password to include numbers? y/n:\n")
-    caps = input("Do you want your password to include capital letters? y/n:\n")
-    lows = input("Do you want your password to include lowercase letters? y/n:\n")
-    spec = input("Do you want your password to include special characters? y/n:\n")
-    length = int(input("How long do you want your password to be?"))
-    times = int(input("How many passwords do you want generated?"))
-    #generates a password as many times as the user asked
-    for i in range(times):
-        print(gen_pass(nums, caps, lows, spec, length, password))
+    print("Welcome to your random password generator! Type 'e' to leave the program.")
+    while True:
+        nums = input("Do you want your password to include numbers? y/n:\n")
+        #lets the user exit the program
+        if nums == 'e':
+            print("Goodbye!")
+            exit()
+        caps = input("Do you want your password to include capital letters? y/n:\n")
+        #lets the user exit the program
+        if caps == 'e':
+            print("Goodbye!")
+            exit()
+        lows = input("Do you want your password to include lowercase letters? y/n:\n")
+        #lets the user exit the program
+        if lows == 'e':
+            print("Goodbye!")
+            exit()
+        spec = input("Do you want your password to include special characters? y/n:\n")
+        #lets the user exit the program
+        if spec == 'e':
+            print("Goodbye!")
+            exit()
+        #Insures the user picked at least one type of character
+        if nums != 'y' and caps != 'y' and lows != 'y' and spec != 'y':
+            print("You must have at least one character type to continue.\n")
+            continue
+        #determines how long the password will be, along with how many passwords to generate.
+        length = int(input("How long do you want your password to be?\n"))
+        times = int(input("How many passwords do you want generated?\n"))
+        #generates a password as many times as the user asked
+        for i in range(times):
+            print(gen_pass(nums, caps, lows, spec, length, password))
 main()
-
