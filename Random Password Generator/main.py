@@ -118,6 +118,9 @@ def main():
         if nums != 'y' and caps != 'y' and lows != 'y' and spec != 'y':
             print("You must have at least one character type to continue.\n")
             continue
+        if nums != 'y' and caps != 'y' and lows != 'y' and spec != 'y' and nums != 'n' and caps != 'n' and lows != 'n' and spec != 'n':
+            print("Please enter 'n' or 'y' to every question.")
+            continue
         #determines how long the password will be, along with how many passwords to generate.
         length = int(input("How long do you want your password to be?\n"))
         times = int(input("How many passwords do you want generated?\n"))
