@@ -1,12 +1,16 @@
 #Nicholas Larsen Morse Code Translater
 
+#lists of english characters and corresponding morse code, with indexes matched.
 english = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0']
 morse = ['._', '_...', '_._.', '_..', '.', '.._.', '__.', '....', '..', '.___', '_._', '._..', '__', '_.', '___', '.__.', '__._', '._.', '...', '_', '.._', '..._', '.__', '_.._', '_.__', '__..', '.____', '..___', '...__', '...._', '.....', '_....', '__...', '___..', '____.', '_____']
 
+#translates morse code to english
 def morse_to_english(morse, english):
     translated = []
-    message = input("What message would you like to translate?\nPlease use . and _, with - surrounded by spaces to represent spaces.\nUse spaces in between letters.\n").lower()
+    message = input("What message would you like to translate?\nPlease use . and _, with - surrounded by spaces to represent spaces.\nUse spaces in between letters.\n(Invalid morse code will be ignored.)\n").lower()
+    #splits the string into a list
     list_message = message.split(' ')
+    #for each character in the list, check if it matches any of the morse code characters, and if it does, add the corresponding english character to the final translated message.
     for i in list_message:
         for item in morse:
             if i == item:
@@ -17,9 +21,11 @@ def morse_to_english(morse, english):
     translated_str = ''.join(translated)
     print(translated_str)
 
+#Translates english to morse code
 def english_to_morse(morse, english):
     translated = []
-    message = input("What message would you like to translate?").lower()
+    message = input("What message would you like to translate? (Invalid characters will be ignored.)").lower()
+    #for each character in the string, check if it matches any of the english characters, and if it does, add the corresponding more code to the final translated message.
     for i in message:
         for item in english:
             if i == item:
@@ -32,7 +38,7 @@ def english_to_morse(morse, english):
     print(translated_str)
 
 
-
+#Allows the user to translate English -> Morse, Morse -> English, or exit.
 def main():
     print("Welcome to your morse code translater!")
     while True:
