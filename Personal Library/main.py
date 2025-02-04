@@ -7,7 +7,13 @@ def add(library):
         author = input("\nWho wrote the book?")
         pages = input("\nHow many pages long is the book?")
         genre = input("\nWhat genre is the book?")
-        library.append((book, author, pages, genre))
+        #Creates a dictionary to store the book
+        library.append({
+            'Name':book,
+            'Author':author,
+            'Pages':pages,
+            'Genre':genre
+        })
         show(library)
         return
     else:
@@ -19,7 +25,7 @@ def rmove(library):
     if item != "e":
         for i in library:
             for attribute in i:
-                if attribute == item:
+                if i[attribute] == item:
                     library.remove(i)
                     print("Got it!")
                     return
@@ -36,9 +42,9 @@ def search(library):
         for i in library:
             #checks each attribute of the book
             for attribute in i:
-                if attribute == item:
+                if i[attribute] == item:
                     #prints the attributes of the book and the spot in the list
-                    print("\nFound it! The book is", i[0], "by", i[1] +',', i[2], "pages long, and a", i[3], "book.\nIt is item", library.index(i)+1, "in your library.")
+                    print(f"\nFound it! The book is {i['Name']}, by {i['Author']}, {i['Pages']} pages long, and a {i['Genre']} book.")
                     return
         print("Sorry, I couldn't find that book.")
         return
@@ -48,7 +54,7 @@ def search(library):
 #A function to print the library in a more appealing way
 def show(library):
     for item in library:
-        print(f"{item[0]} by {item[1]}, a {item[3]} book, and {item[2]} pages long.")
+        print(f"{item['Name']} by {item['Author']}, a {item['Genre']} book, and {item['Pages']} pages long.")
 
 
 
