@@ -5,9 +5,8 @@ morse = ['._', '_...', '_._.', '_..', '.', '.._.', '__.', '....', '..', '.___', 
 
 def morse_to_english(morse, english):
     translated = []
-    message = input("What message would you like to translate?\nPlease use . and _, with - surrounded by spaces to represent spaces.\nUse spaces in between letters.\n")
+    message = input("What message would you like to translate?\nPlease use . and _, with - surrounded by spaces to represent spaces.\nUse spaces in between letters.\n").lower()
     list_message = message.split(' ')
-    print(list_message)
     for i in list_message:
         for item in morse:
             if i == item:
@@ -18,7 +17,19 @@ def morse_to_english(morse, english):
     translated_str = ''.join(translated)
     print(translated_str)
 
-
+def english_to_morse(morse, english):
+    translated = []
+    message = input("What message would you like to translate?").lower()
+    for i in message:
+        for item in english:
+            if i == item:
+                translated.append(morse[english.index(item)])
+                translated.append(' ')
+            elif i == ' ':
+                translated.append(' - ')
+                break
+    translated_str = ''.join(translated)
+    print(translated_str)
 
 
 
@@ -27,7 +38,7 @@ def main():
     while True:
         choice = input("Would you like to:\n1:Translate English to morse code\n2:Translate morse code to English\n3:Exit\n")
         if choice == '1':
-            break
+            english_to_morse(morse, english)
         elif choice == '2':
             morse_to_english(morse, english)
         elif choice == '3':
@@ -36,3 +47,4 @@ def main():
         else:
             print("Sorry, please enter 1, 2, or 3.")
             continue
+main()
