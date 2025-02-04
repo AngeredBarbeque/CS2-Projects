@@ -33,6 +33,37 @@ def rmove(library):
         return
     else:
         return
+def edit(library):
+    item = input("\nWhat book would you like to change in your library? You can choose a book with its name, genre, author, or page number:\n")
+    if item != "e":
+        for i in library:
+            for attribute in i:
+                if i[attribute] == item:
+                    choice = input("Would you like to\n1:Edit name\n2:Edit author\n3:Edit page number\n4:Edit genre\nChoose:")
+                    if choice == '1':
+                        name = input("What would you like to rename the book?\n")
+                        i.update({'Name':name})
+                        return
+                    elif choice == '2':
+                        author = input("What would you like the new author to be?\n")
+                        i.update({'Author':author})
+                        return
+                    elif choice == '3':
+                        pages = input("What would you like the new page number to be?\n")
+                        i.update({'Pages':pages})
+                        return
+                    elif choice == '4':
+                        genre = input("What would you like the new genre to be?\n")
+                        i.update({'Genre':genre})
+                        return
+                    elif choice == 'e':
+                        return
+                    else:
+                        print("Sorry, please enter 1, 2, 3, 4, or e.")
+        print("Couldn't find that book.")
+        return
+    else:
+        return
 
 #searches for items within the library
 def search(library):
@@ -56,14 +87,17 @@ def show(library):
     for item in library:
         print(f"{item['Name']} by {item['Author']}, a {item['Genre']} book, and {item['Pages']} pages long.")
 
-
+#Prints some important details about the books, but not everything.
+def simple_show(library):
+    for item in library:
+        print(f'{item['Name']} by {item['Author']}.')
 
 #main function that allows the user to choose what they want to do
 def main():
     print("\nHello! Welcome to your perosnal library!\nThis program will help you manage a collection of books.\nIf at any point you want to exit, enter 'e'.\n")
     #loops so that the program runs until the user tells it to stop
     while True:
-        choice = input("\nWhat would you like to do?\n1:Add items to your library.\n2:Remove items from your library.\n3:Search for an item in your library.\n4:View Library\nChoose:")
+        choice = input("\nWhat would you like to do?\n1:Add items to your library.\n2:Remove items from your library.\n3:Search for an item in your library.\n4:View full Library\n5:View simple library\n6:Edit a book\nChoose:")
         if choice == '1':
             add(library)
         elif choice == '2':
@@ -75,6 +109,10 @@ def main():
         elif choice == 'e':
             print("\nGoodbye!")
             exit()
+        elif choice == '5':
+            simple_show(library)
+        elif choice == '6':
+            edit(library)
         else:
             print("\nSorry, didn't get that.")
 main()
