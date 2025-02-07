@@ -1,4 +1,9 @@
 import pygame
+import time
+
+#start = time.time()
+#end = time.time()
+#end-start = final_time
 
 gameScreen = pygame.display.set_mode((800,600))
 pygame.display.set_caption('Pygame Mouse Click - Test Game')
