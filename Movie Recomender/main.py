@@ -4,7 +4,7 @@ import csv
 
 #opens the csv file containing the movies, and appends a dictionary containing a movie and its details to the main list
 def read(movies):
-    with open("Movie Recomender\movies.csv", 'r') as file:
+    with open("Movie Recomender/movies.csv", 'r') as file:
         csv_reader = csv.reader(file)
         next(csv_reader)
         for movie in csv_reader:
@@ -75,34 +75,41 @@ def remove_filter(filters):
 #A function allowing the user to use the list of filters to decide which movies will be shown.
 def apply_filters(movies, filters):
     applicable = movies
-    #Loops through all the movies, and if they fit the filters, adds them to a list of applicable.
+    #Loops through all the movies, and if they don't fit the filters, removes them from a list of applicable.
     if filters:
         for filter in filters:
             for i in applicable:
-                print(i)
                 for movie in i:
                     if filters[filters.index(filter)][0] == 'title':
                         if not filters[filters.index(filter)][1] == movie:
                             applicable.remove(i)
+
                     elif filters[filters.index(filter)][0] == 'director':
                         if not filters[filters.index(filter)][1] == i[movie]["Director"]:
                             applicable.remove(i)
+
                     elif filters[filters.index(filter)][0] == 'genre':
                         if not filters[filters.index(filter)][1] == i[movie]["Genre"]:
                             applicable.remove(i)
+
                     elif filters[filters.index(filter)][0] == 'rating':
                         if not filters[filters.index(filter)][1] == i[movie]["Rating"]:
                             applicable.remove(i)
+
                     elif filters[filters.index(filter)][0] == 'length':
                         if not filters[filters.index(filter)][1] == i[movie]["Length"]:
                             applicable.remove(i)
+
                     elif filters[filters.index(filter)][0] == 'actor':
                             if not filters[filters.index(filter)][1] in i[movie]["Notable Actors"].split(', '):
                                 applicable.remove(i)
+
         if applicable:
             show(applicable)
+
         else:
             print("No movies fit your filters.\n")
+
     else:
         print("You have no filters.")
 
