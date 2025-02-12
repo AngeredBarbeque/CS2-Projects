@@ -20,7 +20,7 @@ def morse_to_english(morse, english):
             elif i == '-':
                 translated.append(' ')
                 break
-            
+
     translated_str = ''.join(translated)
     print(translated_str)
 
