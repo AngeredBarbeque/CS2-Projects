@@ -20,15 +20,16 @@ def read(movies):
             })
         return movies
 
-#prints the list of movies
+#prints the list of movies in a better looking way.
 def show(movies):
     for i in movies:
         for item in i:
             print(item)
             for prop in i[item]:
                 print(f'{prop}: {i[item][prop]}')
+        print('')
 
-#adds a filter to the list of filters
+#adds a filter to the list of filters in the form of a list where the first item in what type of filter, and the second item is the specific that the user entered.
 def add_filter(filters):
     what = input("Would you like to search by\n1:Movie Title\n2:Director\n3:Genre\n4:Rating\n5:Length\n6:Actor\n")
 
@@ -62,12 +63,14 @@ def add_filter(filters):
 def remove_filter(filters):
     while True:
         print("You are filtering by:")
+        #displays the filters currently active
         for i in filters:
             print(i[1])
         choice = input("What would you like to remove? Use 'e' to leave.\n")
         if choice == 'e':
             return filters
         else:
+            #checks if any item in the list of filters matches the user's input.
             for i in filters:
                 if i[1] == choice:
                     filters.remove(i)
@@ -75,12 +78,14 @@ def remove_filter(filters):
 #A function allowing the user to use the list of filters to decide which movies will be shown.
 def apply_filters(movies, filters):
     applicable = movies.copy()
+    #Uses a third list to iterate through so that we don't remove from the list we iterate over.
     iterating = movies
     #Loops through all the movies, and if they don't fit the filters, removes them from a list of applicable.
     if filters:
         for filter in filters:
             for i in iterating:
                 for movie in i:
+                    #Uses the first part of the filter list to determine which type of filter is being looked for.
                     if filters[filters.index(filter)][0] == 'title':
                         if not filters[filters.index(filter)][1] == movie:
                             applicable.remove(i)
@@ -104,16 +109,17 @@ def apply_filters(movies, filters):
                     elif filters[filters.index(filter)][0] == 'actor':
                             if not filters[filters.index(filter)][1] in i[movie]["Notable Actors"].split(', '):
                                 applicable.remove(i)
+            #Edits the list we iterate over to insure we don't try to remove non-existent items from the list
             iterating = applicable.copy()
 
         if applicable:
             show(applicable)
-
+        #If no movies matched, (applicable is an empty list), tell the user nothing matched 
         else:
-            print("No movies fit your filters.\n")
-
+            print("\nNo movies fit your filters.\n")
+    #If the list of filters is empty, tell the user.
     else:
-        print("You have no filters.")
+        print("\nYou have no filters.\n")
 
 
 #A function that allows the user to access the other filtering functions, such as adding and removing
