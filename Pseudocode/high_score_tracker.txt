@@ -1,0 +1,77 @@
+define function match
+    if 3 tiles of board with the same character are in a row, collumn, or diagonal:
+        return character
+    else:
+        return None
+
+
+
+Define function tic_tac_toe:
+	While True:
+		Board is 3x3 square of empty characters
+		Choice is set to get user input ‘would you like to play as x, o, or leave?’
+		If choice is ‘x’:
+			While True:
+				Place is set to get user input ‘Select tile from 1-9 reading the
+                board from left to right, up to down.’
+
+				If place is int 1, 2, 3, 4, 5, 6, 7, 8, or 9:
+                    replace empty character with ‘X’ on the associated square of the board.
+                    Replace random empty character on board with ‘O’
+
+                    If call function match is true:
+                        display winner was (return of function match)
+
+                        if winner was user and user is logged in:
+                            call function !!PLACEHOLDER NAME!!
+                        
+                        Play_again is set to user input 'would you like to play again?
+
+                        if Play_again is yes:
+                            return to beginning of initial loop
+
+                        if Play_again is no:
+                            exit to game_ui
+
+                        else:
+                            display 'please say yes or no'
+                            return to beginning of loop
+                    else:
+                        continue
+
+                Else:
+                    Display ‘please input a number from 1 to 9’
+                        Return to beginning of loop
+
+
+!!CONTINUE HERE!!
+define function guessing_game:
+    while True:
+        range is set to user input 'what range would you like to guess between, 1-10, 1-100, 1-1000?'
+        number is chosen randomly between range
+        while True:
+            guess is set to user input 'what is your guess'?
+            if guess is higher than number:
+                display 'too high'
+                continue
+            if guess is lower than number:
+                display 'too low'
+                continue
+            if guess is equal to number:
+                display
+    
+
+Define function game_ui:
+	While True:
+	Choice is set to get user input “Which game would you like to play? 1:Tic Tac Toe 2:Number Guessing Game 3:reaction time tester 4:leave”
+	If choice is tic tac toe:
+		Call function tic_tac-toe
+	If choice is number guessing game:
+		Call function guessing_game
+	If choice is reaction time tester:
+		Call function reaction_time
+	If choice is leave:
+		Exit function game_ui
+	Else:
+		Display ‘sorry, please select one of the options.’
+			Return to beginning of loop
