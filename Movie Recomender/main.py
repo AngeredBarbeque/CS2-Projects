@@ -74,11 +74,12 @@ def remove_filter(filters):
 
 #A function allowing the user to use the list of filters to decide which movies will be shown.
 def apply_filters(movies, filters):
-    applicable = movies
+    applicable = movies.copy()
+    iterating = movies
     #Loops through all the movies, and if they don't fit the filters, removes them from a list of applicable.
     if filters:
         for filter in filters:
-            for i in applicable:
+            for i in iterating:
                 for movie in i:
                     if filters[filters.index(filter)][0] == 'title':
                         if not filters[filters.index(filter)][1] == movie:
@@ -103,6 +104,7 @@ def apply_filters(movies, filters):
                     elif filters[filters.index(filter)][0] == 'actor':
                             if not filters[filters.index(filter)][1] in i[movie]["Notable Actors"].split(', '):
                                 applicable.remove(i)
+            iterating = applicable.copy()
 
         if applicable:
             show(applicable)
