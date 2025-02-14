@@ -5,6 +5,19 @@ define function match
         return None
 
 
+define function play_again:
+    Play_again is set to user input 'would you like to play again?
+
+    if Play_again is yes:
+        return true
+
+    if Play_again is no:
+        return false
+
+    else:
+        display 'please say yes or no'
+        return to beginning of loop
+
 
 Define function tic_tac_toe:
 	While True:
@@ -25,17 +38,11 @@ Define function tic_tac_toe:
                         if winner was user and user is logged in:
                             call function !!PLACEHOLDER NAME!!
                         
-                        Play_again is set to user input 'would you like to play again?
-
-                        if Play_again is yes:
-                            return to beginning of initial loop
-
-                        if Play_again is no:
+                        if call function play_again:
+                            return to initial loop
+                        else:
                             exit to game_ui
 
-                        else:
-                            display 'please say yes or no'
-                            return to beginning of loop
                     else:
                         continue
 
@@ -44,37 +51,83 @@ Define function tic_tac_toe:
                         Return to beginning of loop
 
 
-!!CONTINUE HERE!!
 define function guessing_game:
+
     while True:
         guesses is set to 0
         range is set to user input 'what range would you like to guess between, 1-10, 1-100, 1-1000?'
         number is chosen randomly between range
+
         while True:
             guess is set to user input 'what is your guess'?
             guesses is set to guesses + 1
+
             if guess is higher than number:
                 display 'too high'
                 continue
+
             if guess is lower than number:
                 display 'too low'
                 continue
+
             if guess is equal to number:
-                display 'You won in {guesses} tries'
-            
+                display 'You won in {guesses} tries!'
+
+                if user is logged in:
+                            call function !!PLACEHOLDER NAME!!
+
+                if call function play_again:
+                    return to initial loop
+                else:
+                    exit to game_ui
+            else:
+            print("Please input a number.)
+            guesses is set to guesses - 1
     
+
+define function reaction_time:
+    while true:
+        display "A window will pop up. After an amount of time, a message will pop up telling you to click. Click as soon as the message appears!"
+        wait is set to random time between 5 and 15
+        open window with pygame
+        wait for wait seconds
+        display 'CLICK' on window opened by pygame
+
+        while True:
+            incrementing timer, starting at 0
+
+            if user has clicked:
+                break
+
+        display 'you cliked in {timer} seconds!'
+        if user is logged in:
+            call function !!PLACEHOLDER NAME!!
+
+        if call function play_again:
+            return to initial loop
+        else:
+            exit to game_ui
+
+
 
 Define function game_ui:
 	While True:
 	Choice is set to get user input “Which game would you like to play? 1:Tic Tac Toe 2:Number Guessing Game 3:reaction time tester 4:leave”
+
 	If choice is tic tac toe:
 		Call function tic_tac-toe
+
 	If choice is number guessing game:
 		Call function guessing_game
+
 	If choice is reaction time tester:
 		Call function reaction_time
+
 	If choice is leave:
 		Exit function game_ui
+
 	Else:
 		Display ‘sorry, please select one of the options.’
 			Return to beginning of loop
+
+
