@@ -47,10 +47,12 @@ Define function tic_tac_toe:
 !!CONTINUE HERE!!
 define function guessing_game:
     while True:
+        guesses is set to 0
         range is set to user input 'what range would you like to guess between, 1-10, 1-100, 1-1000?'
         number is chosen randomly between range
         while True:
             guess is set to user input 'what is your guess'?
+            guesses is set to guesses + 1
             if guess is higher than number:
                 display 'too high'
                 continue
@@ -58,7 +60,8 @@ define function guessing_game:
                 display 'too low'
                 continue
             if guess is equal to number:
-                display
+                display 'You won in {guesses} tries'
+            
     
 
 Define function game_ui:

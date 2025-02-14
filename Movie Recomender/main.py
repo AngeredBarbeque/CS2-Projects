@@ -11,7 +11,7 @@ def read(movies):
             movies.append({
                 #Creates a dictionary with the name of the movie as a key, and the rest of the attributes inside the value, which is set as a dictionary.
                 movie[0]:{
-                    "Director":movie[1],
+                    "Director(s)":movie[1],
                     "Genre":movie[2],
                     "Rating":movie[3],
                     "Length":movie[4],
@@ -31,7 +31,7 @@ def show(movies):
 
 #adds a filter to the list of filters in the form of a list where the first item in what type of filter, and the second item is the specific that the user entered.
 def add_filter(filters):
-    what = input("Would you like to search by\n1:Movie Title\n2:Director\n3:Genre\n4:Rating\n5:Length\n6:Actor\n")
+    what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n")
 
     if what == '1':
         attribute = input("What title would you like to filter by?\n")
@@ -50,8 +50,15 @@ def add_filter(filters):
         filters.append(['rating', attribute])
 
     elif what == '5':
-        attribute = input("What length would you like to filter by?\n")
-        filters.append(['length', attribute])
+        attribute = input("What length would you like to filter by? (minutes)\n1: 60-90\n2: 90-120\n3: >120\n")
+        if attribute == '1':
+            filters.append(['length', 60, 90])
+        elif attribute == '2':
+            filters.append(['length', 90, 120])
+        elif attribute == '3':
+            filters.append(['length', 120, 100000])
+        else:
+            print("Please enter 1, 2, 3, or 4")
 
     elif what == '6':
         attribute = input("What actor would you like to filter by?\n")
@@ -65,15 +72,28 @@ def remove_filter(filters):
         print("You are filtering by:")
         #displays the filters currently active
         for i in filters:
-            print(i[1])
+            if i[0] == 'length':
+                if i[2] == 100000:
+                    print(f'>{i[1]}')
+                else:
+                    print(f'{i[1]}-{i[2]}')
+            else:
+                print(i[1])
         choice = input("What would you like to remove? Use 'e' to leave.\n")
         if choice == 'e':
             return filters
         else:
             #checks if any item in the list of filters matches the user's input.
             for i in filters:
-                if i[1] == choice:
-                    filters.remove(i)
+                if i[0] == 'length':
+                    try:
+                        if i[1] == int(choice) or i[2] == int(choice):
+                            filters.remove(i)
+                    except:
+                        print("Please enter one of the two numbers involved in the length filer, do not use -, >, or <.")
+                else:
+                    if i[1] == choice:
+                        filters.remove(i)
 
 #A function allowing the user to use the list of filters to decide which movies will be shown.
 def apply_filters(movies, filters):
@@ -87,23 +107,23 @@ def apply_filters(movies, filters):
                 for movie in i:
                     #Uses the first part of the filter list to determine which type of filter is being looked for.
                     if filters[filters.index(filter)][0] == 'title':
-                        if not filters[filters.index(filter)][1] == movie:
+                        if not filters[filters.index(filter)][1] in movie:
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'director':
-                        if not filters[filters.index(filter)][1] == i[movie]["Director"]:
+                        if not filters[filters.index(filter)][1] in i[movie]["Director(s)"].split(', '):
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'genre':
-                        if not filters[filters.index(filter)][1] == i[movie]["Genre"]:
+                        if not filters[filters.index(filter)][1] in i[movie]["Genre"]:
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'rating':
-                        if not filters[filters.index(filter)][1] == i[movie]["Rating"]:
+                        if not filters[filters.index(filter)][1] in i[movie]["Rating"]:
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'length':
-                        if not filters[filters.index(filter)][1] == i[movie]["Length"]:
+                        if not filters[filters.index(filter)][1] <= int(i[movie]["Length"]) or not filters[filters.index(filter)][2] >= int(i[movie]["Length"]):
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'actor':
