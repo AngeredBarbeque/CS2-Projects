@@ -34,19 +34,19 @@ def add_filter(filters):
     what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n").strip()
 
     if what == '1':
-        attribute = input("What title would you like to filter by?\n").upper().strip()
+        attribute = input("What title would you like to filter by?\n")
         filters.append(['title', attribute])
 
     elif what == '2':
-        attribute = input("What director would you like to filter by?\n").upper().strip()
+        attribute = input("What director would you like to filter by?\n")
         filters.append(['director', attribute])
 
     elif what == '3':
-        attribute = input("What genre would you like to filter by?\n").upper().strip()
+        attribute = input("What genre would you like to filter by?\n")
         filters.append(['genre', attribute])
 
     elif what == '4':
-        attribute = input("What rating would you like to filter by?\n").upper().strip()
+        attribute = input("What rating would you like to filter by?\n")
         filters.append(['rating', attribute])
 
     elif what == '5':
@@ -61,7 +61,7 @@ def add_filter(filters):
             print("Please enter 1, 2, 3, or 4")
 
     elif what == '6':
-        attribute = input("What actor would you like to filter by?\n").upper().strip()
+        attribute = input("What actor would you like to filter by?\n")
         filters.append(['actor', attribute])
     
     return filters
@@ -78,9 +78,9 @@ def remove_filter(filters):
                 else:
                     print(f'{i[1]}-{i[2]}')
             else:
-                print(i[1])
-        choice = input("What would you like to remove? Use 'e' to leave.\n").strip().upper()
-        if choice == 'E':
+                print(i[1].strip())
+        choice = input("What would you like to remove? Use 'e' to leave.\n")
+        if choice == 'e' or choice == 'E':
             return filters
         else:
             #checks if any item in the list of filters matches the user's input.
@@ -92,7 +92,7 @@ def remove_filter(filters):
                     except:
                         print("Please enter one of the two numbers involved in the length filer, do not use -, >, or <.")
                 else:
-                    if i[1] == choice:
+                    if i[1].lower().strip() == choice.lower().strip():
                         filters.remove(i)
 
 #A function allowing the user to use the list of filters to decide which movies will be shown.
@@ -107,19 +107,19 @@ def apply_filters(movies, filters):
                 for movie in i:
                     #Uses the first part of the filter list to determine which type of filter is being looked for.
                     if filters[filters.index(filter)][0] == 'title':
-                        if not filters[filters.index(filter)][1] in movie:
+                        if not filters[filters.index(filter)][1].lower().strip() in movie.lower().strip():
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'director':
-                        if not filters[filters.index(filter)][1] in i[movie]["Director(s)"].split(', '):
+                        if not filters[filters.index(filter)][1].lower().strip() in i[movie]["Director(s)"].split(', ').lower().strip():
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'genre':
-                        if not filters[filters.index(filter)][1] in i[movie]["Genre"]:
+                        if not filters[filters.index(filter)][1].lower().strip() in i[movie]["Genre"].lower().strip():
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'rating':
-                        if not filters[filters.index(filter)][1] in i[movie]["Rating"]:
+                        if not filters[filters.index(filter)][1].lower().strip() in i[movie]["Rating"].lower().strip():
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'length':
@@ -127,7 +127,7 @@ def apply_filters(movies, filters):
                             applicable.remove(i)
 
                     elif filters[filters.index(filter)][0] == 'actor':
-                            if not filters[filters.index(filter)][1] in i[movie]["Notable Actors"].split(', '):
+                            if not filters[filters.index(filter)][1].lower().strip() in i[movie]["Notable Actors"].split(', ').lower().strip():
                                 applicable.remove(i)
             #Edits the list we iterate over to insure we don't try to remove non-existent items from the list
             iterating = applicable.copy()
