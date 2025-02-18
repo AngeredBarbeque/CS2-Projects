@@ -31,26 +31,26 @@ def show(movies):
 
 #adds a filter to the list of filters in the form of a list where the first item in what type of filter, and the second item is the specific that the user entered.
 def add_filter(filters):
-    what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n")
+    what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n").strip()
 
     if what == '1':
-        attribute = input("What title would you like to filter by?\n").upper()
+        attribute = input("What title would you like to filter by?\n").upper().strip()
         filters.append(['title', attribute])
 
     elif what == '2':
-        attribute = input("What director would you like to filter by?\n").upper()
+        attribute = input("What director would you like to filter by?\n").upper().strip()
         filters.append(['director', attribute])
 
     elif what == '3':
-        attribute = input("What genre would you like to filter by?\n").upper()
+        attribute = input("What genre would you like to filter by?\n").upper().strip()
         filters.append(['genre', attribute])
 
     elif what == '4':
-        attribute = input("What rating would you like to filter by?\n").upper()
+        attribute = input("What rating would you like to filter by?\n").upper().strip()
         filters.append(['rating', attribute])
 
     elif what == '5':
-        attribute = input("What length would you like to filter by? (minutes)\n1: 60-90\n2: 90-120\n3: >120\n")
+        attribute = input("What length would you like to filter by? (minutes)\n1: 60-90\n2: 90-120\n3: >120\n").strip()
         if attribute == '1':
             filters.append(['length', 60, 90])
         elif attribute == '2':
@@ -61,7 +61,7 @@ def add_filter(filters):
             print("Please enter 1, 2, 3, or 4")
 
     elif what == '6':
-        attribute = input("What actor would you like to filter by?\n").upper()
+        attribute = input("What actor would you like to filter by?\n").upper().strip()
         filters.append(['actor', attribute])
     
     return filters
@@ -79,8 +79,8 @@ def remove_filter(filters):
                     print(f'{i[1]}-{i[2]}')
             else:
                 print(i[1])
-        choice = input("What would you like to remove? Use 'e' to leave.\n")
-        if choice == 'e':
+        choice = input("What would you like to remove? Use 'e' to leave.\n").strip().upper()
+        if choice == 'E':
             return filters
         else:
             #checks if any item in the list of filters matches the user's input.
@@ -145,7 +145,7 @@ def apply_filters(movies, filters):
 #A function that allows the user to access the other filtering functions, such as adding and removing
 def search(movies, filters):
     while True:
-        choice = input("Would you like to\n1:Add a filter\n2:Remove a filter\n3:View aplicable movies\n4:Leave\n")
+        choice = input("Would you like to\n1:Add a filter\n2:Remove a filter\n3:View aplicable movies\n4:Leave\n").strip()
         if choice == '1':
             filters = add_filter(filters)
         elif choice == '2':
@@ -164,7 +164,7 @@ def main():
     movies = read(movies)
     print("Hello! Welcome to your movie recomender!")
     while True:
-        choice = input("Would you like to\n1:View your full list of movies\n2:Search for a specific movie, directer, genre, rating, length, or actors\n3:Leave\n")
+        choice = input("Would you like to\n1:View your full list of movies\n2:Search for a specific movie, directer, genre, rating, length, or actors\n3:Leave\n").strip()
         if choice == '1':
             show(movies)
         elif choice == '2':
