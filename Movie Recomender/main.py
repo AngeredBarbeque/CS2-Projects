@@ -31,7 +31,7 @@ def show(movies):
 
 #adds a filter to the list of filters in the form of a list where the first item in what type of filter, and the second item is the specific that the user entered.
 def add_filter(filters):
-    what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n").strip()
+    what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n7:Leave\n").strip()
 
     if what == '1':
         attribute = input("What title would you like to filter by?\n")
@@ -63,6 +63,12 @@ def add_filter(filters):
     elif what == '6':
         attribute = input("What actor would you like to filter by?\n")
         filters.append(['actor', attribute])
+    
+    elif what == '7':
+        return filters
+
+    else:
+        print("Please enter 1, 2, 3, 4, 5, 6, or 7.")
     
     return filters
 
