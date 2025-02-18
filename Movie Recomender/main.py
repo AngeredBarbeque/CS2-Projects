@@ -34,19 +34,19 @@ def add_filter(filters):
     what = input("Would you like to search by\n1:Movie Title\n2:Director(s)\n3:Genre\n4:Rating\n5:Length\n6:Actor\n")
 
     if what == '1':
-        attribute = input("What title would you like to filter by?\n")
+        attribute = input("What title would you like to filter by?\n").upper()
         filters.append(['title', attribute])
 
     elif what == '2':
-        attribute = input("What director would you like to filter by?\n")
+        attribute = input("What director would you like to filter by?\n").upper()
         filters.append(['director', attribute])
 
     elif what == '3':
-        attribute = input("What genre would you like to filter by?\n")
+        attribute = input("What genre would you like to filter by?\n").upper()
         filters.append(['genre', attribute])
 
     elif what == '4':
-        attribute = input("What rating would you like to filter by?\n")
+        attribute = input("What rating would you like to filter by?\n").upper()
         filters.append(['rating', attribute])
 
     elif what == '5':
@@ -61,7 +61,7 @@ def add_filter(filters):
             print("Please enter 1, 2, 3, or 4")
 
     elif what == '6':
-        attribute = input("What actor would you like to filter by?\n")
+        attribute = input("What actor would you like to filter by?\n").upper()
         filters.append(['actor', attribute])
     
     return filters
