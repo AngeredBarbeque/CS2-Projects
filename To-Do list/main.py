@@ -2,11 +2,33 @@
 
 #Marks a task as complete
 def mark_done(to_dos):
-    pass
+    while True:
+        display(to_dos)
+        task = input('What task would you like to change the status of? Use e to exit to main menu.\n').strip()
+        if task != 'e' and task != 'E':
+            success = False
+            with open('To-Do list/task.txt', 'w') as file:
+                for i in to_dos:
+                    if i[0].upper() == task.upper():
+                        if i[1] == 'Incomplete':
+                            file.write(f'{i[0]}:Complete ')
+                            success = True
+                        else:
+                            file.write(f'{i[0]}:Incomplete ')
+                            success = True
+                    else:
+                        CANT WRITE LIST TO FILE
+                        file.write(i)
+                if success == True:
+                    print("Success!")
+                else:
+                    print("Sorry, didn't find a task of that name.")
+        else:
+            break
 
 #Adds an item with the proper formatting to the list of to-dos.
 def add_item(to_dos):
-    with open('To-Do list/task.txt', 'a+') as file:
+    with open('To-Do list/task.txt', 'a') as file:
         while True:
             task = input("What would you like to add? Use 'e' to exit to main menu.\n").strip()
             if task != 'e' and task != 'E':
@@ -28,6 +50,7 @@ def display(applicable):
             print(f'\nTo-do:{i[0]}')
         else:
             print(f'\nDone:{i[0]}')
+    print('\n')
 
 def view_tasks(to_dos):
     while True:
@@ -51,22 +74,28 @@ def sync():
     with open('To-Do list/task.txt', 'r') as file:
             to_dos = []
             text = file.read()
-            for i in text.split():
+            for i in text.split(' '):
                 i = i.split(':')
-                to_dos.append(i)
+                try:
+                    i[1]
+                except:
+                    pass
+                else:
+                    to_dos.append(i)
     return to_dos
 
 def main():
     print("Welcome to your to-do list manager!")
     while True:
         to_dos = sync()
-        choice = input("Would you like to\n1:Add a task to your to-do list\n2:Remove an item from your to-do list\n3:Mark an item as complete or incomplete on your to-do list\n4:View your to-do list\n5:Exit (To-do list will be saved.)\n").strip()
+        print(to_dos)
+        choice = input("Would you like to:\n1:Add a task to your to-do list\n2:Remove an item from your to-do list\n3:Mark an item as complete or incomplete on your to-do list\n4:View your to-do list\n5:Exit (To-do list will be saved.)\n").strip()
         if choice == '1':
-            to_dos = add_item(to_dos)
+            add_item(to_dos)
         elif choice == '2':
-            to_dos = remove_item(to_dos)
+            remove_item(to_dos)
         elif choice == '3':
-                to_dos = mark_done(to_dos)
+            mark_done(to_dos)
         elif choice == '4':
             view_tasks(to_dos)
         elif choice == '5':
