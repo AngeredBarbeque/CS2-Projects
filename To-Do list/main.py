@@ -16,7 +16,7 @@ def mark_done(to_dos):
                             file.write(f'{i[0]}:Incomplete ')
                             success = True
                     else:
-                        file.write(f'{i[0]}:{i[1]}')
+                        file.write(f'{i[0]}:{i[1]} ')
                 if success == True:
                     print("Success!")
                 else:
@@ -38,14 +38,15 @@ def add_item(to_dos):
 #Permenantly removes an item from the to-do list.
 def remove_item(to_dos):
         while True:
-            task = ('What task would you like to remove? Use e to exit to main menu.\n').strip()
+            task = input('What task would you like to remove? Use e to exit to main menu.\n').strip()
             if task != 'e' and task != 'E':
-                with open('To-Do list\task.txt', 'w') as file:
+                with open('To-Do list/task.txt', 'w') as file:
                     success = False
                     for i in to_dos:
                         if i[0].upper() != task.upper():
-                                file.write(f'{i[0]}:{i[1]}')
-                                success = True
+                                file.write(f'{i[0]}:{i[1]} ')
+                        else:
+                            success = True
                     if success == True:
                         print("Success!")
                     else:
