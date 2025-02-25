@@ -38,6 +38,7 @@ def add_item(to_dos):
 #Permenantly removes an item from the to-do list.
 def remove_item(to_dos):
         while True:
+            to_dos = sync()
             task = input('What task would you like to remove? Use e to exit to main menu.\n').strip()
             if task != 'e' and task != 'E':
                 with open('To-Do list/task.txt', 'w') as file:
