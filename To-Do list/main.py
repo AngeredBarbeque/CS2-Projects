@@ -3,7 +3,6 @@
 #Marks a task as complete
 def mark_done(to_dos):
     while True:
-        display(to_dos)
         task = input('What task would you like to change the status of? Use e to exit to main menu.\n').strip()
         if task != 'e' and task != 'E':
             success = False
@@ -17,8 +16,7 @@ def mark_done(to_dos):
                             file.write(f'{i[0]}:Incomplete ')
                             success = True
                     else:
-                        CANT WRITE LIST TO FILE
-                        file.write(i)
+                        file.write(f'{i[0]}:{i[1]} ')
                 if success == True:
                     print("Success!")
                 else:
@@ -34,13 +32,28 @@ def add_item(to_dos):
             if task != 'e' and task != 'E':
                 file.write(f'{task}:Incomplete ')
                 to_dos = sync()
-                display(to_dos)
             else:
                 return to_dos
 
 #Permenantly removes an item from the to-do list.
 def remove_item(to_dos):
-    pass
+        while True:
+            to_dos = sync()
+            task = input('What task would you like to remove? Use e to exit to main menu.\n').strip()
+            if task != 'e' and task != 'E':
+                with open('To-Do list/task.txt', 'w') as file:
+                    success = False
+                    for i in to_dos:
+                        if i[0].upper() != task.upper():
+                                file.write(f'{i[0]}:{i[1]} ')
+                        else:
+                            success = True
+                    if success == True:
+                        print("Success!")
+                    else:
+                        print("Sorry, didn't find a task of that name.")
+            else:
+                break
 
 #Prints the to-dos in a nice way.
 def display(applicable):
@@ -88,7 +101,6 @@ def main():
     print("Welcome to your to-do list manager!")
     while True:
         to_dos = sync()
-        print(to_dos)
         choice = input("Would you like to:\n1:Add a task to your to-do list\n2:Remove an item from your to-do list\n3:Mark an item as complete or incomplete on your to-do list\n4:View your to-do list\n5:Exit (To-do list will be saved.)\n").strip()
         if choice == '1':
             add_item(to_dos)
