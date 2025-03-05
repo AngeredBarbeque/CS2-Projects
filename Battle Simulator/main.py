@@ -23,7 +23,7 @@ def create():
             print(f"{name} the {char_class}.\nIs that correct?")
             verify = input('y/n:').upper()
             if verify == 'Y':
-                save_char()
+                save_char(name, char_class, 1, 0)
                 print("Character saved!")
                 return
             elif verify == 'N':
@@ -32,19 +32,19 @@ def create():
                 print("Please enter y or n.")
                 continue
 #Saves the character to the csv file
-def save_char(name, char_class, level):
+def save_char(name, char_class, level, exp):
     import csv
     health = 100
     strength = 10
     defense = 4
     speed = 10
     if char_class == 'Warrior':
-        defense += 2
+        defense += 3
     elif char_class == 'Rogue':
         speed += 5
     elif char_class == 'Brute':
         strength += 5
     with open('Battle Simulator/chars.csv', 'a') as file:
         csv_writer = csv.writer(file)
-        csv_writer.writerow(name, )
+        csv_writer.writerow(name, health, strength, defense, speed)
 create()
