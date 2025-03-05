@@ -2,9 +2,9 @@
 def create():
     while True:
         name = input("What is the name of your character?\n")
-        print("What class is your character?\n1:Warrior: Boosted defense\nSlam: Hits enemy with a chance to stun.\nAt level 5: Prepare: Further boosts defense for 3 turns.\n")
-        print("2:Rogue: Boosted speed\nAmbush: Sneak attacks an enemy to ignore part of their defense.\nAt level 5: Crafty: Has a chance to critical hit on any attack.\n")
-        print("3:Brute: Boosted strength\nVicious Strike: Attacks for doubled damage, but always goes last.\nAt level 5: Second Wind: After dropping to 0 health for the first time in a battle, revives with 1 health.\n")
+        print("What class is your character?\n1:Warrior: Boosted defense\n")
+        print("2:Rogue: Boosted speed\n")
+        print("3:Brute: Boosted strength\n")
         print('4:Exit')
         input_class = input('Choose:').strip()
         if input_class == '1':
@@ -31,6 +31,7 @@ def create():
             else:
                 print("Please enter y or n.")
                 continue
+
 #Saves the character to the csv file
 def save_char(name, char_class, level, exp):
     import csv
@@ -38,13 +39,33 @@ def save_char(name, char_class, level, exp):
     strength = 10
     defense = 4
     speed = 10
+    #Edits the  player's stats based on their level and class
     if char_class == 'Warrior':
-        defense += 3
+        defense = round(defense * 1.5)
     elif char_class == 'Rogue':
-        speed += 5
+        speed = round(speed * 1.5)
     elif char_class == 'Brute':
-        strength += 5
-    with open('Battle Simulator/chars.csv', 'a') as file:
+        strength = round(strength * 1.5)
+    for i in range(level):
+        health = round(health * 1.2)
+        strength = round(strength * 1.2)
+        defense  =  round(defense * 1.2)
+        speed = round(speed * 1.2)
+    with open('Battle Simulator/chars.csv', 'a',newline='') as file:
         csv_writer = csv.writer(file)
-        csv_writer.writerow(name, health, strength, defense, speed)
-create()
+        character  =  [name, health, strength, defense, speed, char_class, level, exp, ]
+        csv_writer.writerow(character)
+def display_chars():
+    chars = []
+    with open('Battle Simulator/chars.csv', 'r') as file:
+        csv_reader = csv.reader(file)
+        next(csv_reader)
+        for i in csv_reader:
+            chars.append([i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7]])
+        for i in chars:
+            print(f'\n{i[0]}:\nLevel:{i[6]}\nEXP:{i[7]}\nClass:{i[5]}\nHealth:{i[1]}\nStrength:{i[2]}')
+            print(f'Defense:{i[3]}\nSpeed:{i[4]}\n')
+
+
+import csv
+display_chars()

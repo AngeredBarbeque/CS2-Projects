@@ -1,2 +1,2 @@
-Name,Health,Strength,Defense,Speed
-Jim,10,2,1,4
+Name,Health,Strength,Defense,Speed,Class,Level,exp
+Pumpkin Pie,100,15,4,10,Brute,1,0

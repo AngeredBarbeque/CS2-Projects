@@ -21,7 +21,7 @@ with open('Notes/things.txt', 'r') as file:
 
 "CSVs are easier to use than normal .txt files."
 
-with open('Notes\sample.csv', 'r') as file:
+with open('Notes/sample.csv', 'r') as file:
     csv_reader = csv.reader(file)
     next(csv_reader)
     for row in csv_reader:
@@ -30,5 +30,5 @@ print(users)
 
 
 #worse syntax
-file = open('Notes\sample.csv', 'r')
+file = open('Notes/sample.csv', 'r')
 csv_reader = csv.reader(file)
