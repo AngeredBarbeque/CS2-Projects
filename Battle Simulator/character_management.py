@@ -89,21 +89,31 @@ def get_chars():
 #Selects the two characters to battle
 def char_select():
     chars = get_chars()
-    char_one = inquirer.select(
+    names = []
+    for i in chars:
+        names.append(i[0])
+    strchar_one = inquirer.select(
         message="Select a character:",
-        choices=chars.copy(),
+        choices=names.copy(),
         default=None,
         ).execute()
-    char_two = inquirer.select(
+    strchar_two = inquirer.select(
         message="Select another character:",
-        choices=chars.copy(),
+        choices=names.copy(),
         default=None,
         ).execute()
-    if char_one == char_two:
+    if strchar_one == strchar_two:
         print("Please choose two seperate characters.")
         char_select()
     else:
-        return char_one, char_two
+        char_one = []
+        char_two  =  []
+        for i in chars:
+            if i[0] == strchar_one:
+                char_one = i.copy()
+            if i[0] == strchar_two:
+                char_two = i.copy()
+        return [char_one, char_two]
     
 def edit_char(char,exp_gain):
     chars = get_chars()
@@ -115,10 +125,10 @@ def edit_char(char,exp_gain):
         csv_writer = csv.writer(file)
         for i in selected:
             csv_writer.writerow(i)
-        char[6] += exp_gain
-        if char[6] >= 100:
-            char[6] = 0
-            char[7] += 1
+        char[7] += exp_gain
+        if char[7] >= 100:
+            char[7] = 0
+            char[6] += 1
         updated_character = [char[0],char[1],char[2],char[3],char[4],char[5],char[6],char[7]]
         csv_writer.writerow(updated_character)
 
