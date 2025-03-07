@@ -6,6 +6,8 @@ def battle():
         print(f"{char[0]}'s turn!")
         health = int(char[1])
         opponent_health = int(opponent[1])
+        print(f"{opponent[0]}'s health:\n{opponent_health}")
+        print(f'Your health is:\n{health}')
         #Gives the player their abilities
         if char[5] == 'Pig':
             abilities = ['Headbutt']
