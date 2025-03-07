@@ -40,7 +40,7 @@ def battle():
             opponent[8] = True
             damage = 0
         elif choice == 'Reverse Jury Nullification':
-            damage = int(char[2]) + 10 - int(opponent[3])
+            damage = int(char[2]) * 2 - int(opponent[3])
         elif choice == 'Preserve':
             char[2] *= 1.2
         elif choice == 'Arson':
