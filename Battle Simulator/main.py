@@ -1,4 +1,5 @@
 import csv
+from battle_management import *
 from character_management import *
 import random
 from InquirerPy import inquirer
@@ -22,7 +23,10 @@ def main():
         elif choice == 'View characters':
             display_chars()
         elif choice == 'Battle':
-            pass
+            result = battle()
+            char = result[0].pop
+            exp_gain = result[1]
+            edit_char(char, exp_gain)
         elif choice == 'Exit':
             exit()
 main()

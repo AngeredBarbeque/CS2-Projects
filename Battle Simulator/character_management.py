@@ -104,3 +104,23 @@ def char_select():
         char_select()
     else:
         return char_one, char_two
+    
+def edit_char(char,exp_gain):
+    chars = get_chars()
+    selected = []
+    for i in chars:
+        if i[0] != char[0]:
+            selected.append(i)
+    with open('Battle Simulator/chars.csv', 'w') as file:
+        csv_writer = csv.writer(file)
+        for i in selected:
+            csv_writer.writerow(i)
+        char[6] += exp_gain
+        if char[6] >= 100:
+            char[6] = 0
+            char[7] += 1
+        updated_character = [char[0],char[1],char[2],char[3],char[4],char[5],char[6],char[7]]
+        csv_writer.writerow(updated_character)
+
+    
+    
