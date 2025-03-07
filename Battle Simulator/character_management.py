@@ -1,5 +1,8 @@
 
 import csv
+from InquirerPy import inquirer
+from InquirerPy.base.control import Choice
+from InquirerPy.separator import Separator
 #Allows the user to create a character
 def create():
     while True:
@@ -8,7 +11,17 @@ def create():
         print("2:Lawyer: Boosted speed\nLawsuit: Sues the oppenent, inflicting them with crippling debt, which deals damage every turn.\nAt Level 5: Reverse Jury Nullification: Falsely convicts the oppenent, dealing considerable damage.")
         print("3:Pig: Boosted strength\nCharge: Headbutts the oppenent, dealing damage with a chance to stun.\nAt Level 5: Eat Scraps: Eats a pile of trash in order to regain health.")
         print('4:Exit')
-        input_class = input('Choose:').strip()
+        input_class = inquirer.select(
+        message="Select an action:",
+        choices=[
+            "Mummified Dog",
+            "Lawyer",
+            'Pig',
+            "Exit",
+        ],
+        filter = lambda result:result.split()[0].lower(),
+        default=None,
+        ).execute()
         if input_class == '1':
             char_class = 'Mummified Dog'
         elif input_class == '2':
