@@ -15,17 +15,14 @@ def main():
             'Battle',
             "Exit",
         ],
-        filter = lambda result:result.split()[0].lower(),
         default=None,
     ).execute()
-        if choice == 'create':
+        if choice == 'Create a character':
             create()
-        elif choice == 'view':
+        elif choice == 'View characters':
             display_chars()
-        elif choice == 'battle':
+        elif choice == 'Battle':
             pass
-        elif choice == 'exit':
+        elif choice == 'Exit':
             exit()
-        else:
-            print('Please enter 1, 2, 3, or 4.')
 main()

@@ -9,26 +9,25 @@ def create():
         name = input("What is the name of your character?\n")
         print("What class is your character?\n1:Mumified Dog: Boosted defense\nPreserve: Preserve yourself in a peat bog in order to boost your defense for 3 turns.\nAt Level 5: Arson: launch a flaming ball of swamp matter dealing damage that ignores defense.")
         print("2:Lawyer: Boosted speed\nLawsuit: Sues the oppenent, inflicting them with crippling debt, which deals damage every turn.\nAt Level 5: Reverse Jury Nullification: Falsely convicts the oppenent, dealing considerable damage.")
-        print("3:Pig: Boosted strength\nCharge: Headbutts the oppenent, dealing damage with a chance to stun.\nAt Level 5: Eat Scraps: Eats a pile of trash in order to regain health.")
+        print("3:Pig: Boosted strength\nCharge: Headbutts the oppenent, dealing damage with a chance to crit.\nAt Level 5: Eat Scraps: Eats a pile of trash in order to regain health.")
         print('4:Exit')
         input_class = inquirer.select(
-        message="Select an action:",
+        message="Select a class:",
         choices=[
             "Mummified Dog",
             "Lawyer",
             'Pig',
             "Exit",
         ],
-        filter = lambda result:result.split()[0].lower(),
         default=None,
         ).execute()
-        if input_class == '1':
+        if input_class == 'Mummified Dog':
             char_class = 'Mummified Dog'
-        elif input_class == '2':
+        elif input_class == 'Lawyer':
             char_class = 'Lawyer'
-        elif input_class == '3':
+        elif input_class == 'Pig':
             char_class = 'Pig'
-        elif input_class == '4':
+        elif input_class == 'Exit':
             return
         else:
             print("Please enter 1, 2, 3 or 4.")
@@ -72,12 +71,36 @@ def save_char(name, char_class, level, exp):
 
 #Displays all character currently in the list
 def display_chars():
+    chars = get_chars()
+    for i in chars:
+        print(f'\n{i[0]}:\nLevel:{i[6]}\nEXP:{i[7]}\nClass:{i[5]}\nHealth:{i[1]}\nStrength:{i[2]}')
+        print(f'Defense:{i[3]}\nSpeed:{i[4]}\n')
+
+#Returns a list with all the characters
+def get_chars():
     chars = []
     with open('Battle Simulator/chars.csv', 'r') as file:
         csv_reader = csv.reader(file)
         next(csv_reader)
         for i in csv_reader:
             chars.append([i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7]])
-        for i in chars:
-            print(f'\n{i[0]}:\nLevel:{i[6]}\nEXP:{i[7]}\nClass:{i[5]}\nHealth:{i[1]}\nStrength:{i[2]}')
-            print(f'Defense:{i[3]}\nSpeed:{i[4]}\n')
+    return chars
+
+#Selects the two characters to battle
+def char_select():
+    chars = get_chars()
+    char_one = inquirer.select(
+        message="Select a character:",
+        choices=chars.copy(),
+        default=None,
+        ).execute()
+    char_two = inquirer.select(
+        message="Select another character:",
+        choices=chars.copy(),
+        default=None,
+        ).execute()
+    if char_one == char_two:
+        print("Please choose two seperate characters.")
+        char_select()
+    else:
+        return char_one, char_two
