@@ -33,27 +33,36 @@ def battle():
             damage = int(char[2]) - int(opponent[3])
         elif choice == 'Headbutt':
             if random.randint(1, 5) == 5:
-                damage = int(char[2]) * 1.5 - int(opponent[3])
+                print("Critical strike!")
+                damage = int(char[2]) * 3 - int(opponent[3])
             else:
                 damage = int(char[2]) - int(opponent[3])
         elif choice == 'Eat Scraps':
             health = round(health*1.2)
+            print("You healed youself by eating scraps!")
             damage = 0
         elif choice == 'Lawsuit':
+            #ADD FUN MESSAGES
             opponent[8] = True
             damage = 0
         elif choice == 'Reverse Jury Nullification':
+            #ADD FUN MESSAGES
             damage = int(char[2]) * 2 - int(opponent[3])
         elif choice == 'Preserve':
             damage = 0
             char[3] = round(int(char[3]) * 1.2)
+            print("You preserve yourself, increasing your defense!")
         elif choice == 'Arson':
             damage = char[2]
-        opponent_health -= damage
+        if damage < 0:
+            damage = 0
+        opponent_health = opponent_health - int(damage)
         print(f"Your opponent took {damage} damage!\n")
         if opponent[8]:
+            print("Your opponent took 5 damage due to your lawsuit!")
             opponent_health -= 5
         if char[8]:
+            print("You took 5 damage due to your opponent's lawsuit!")
             health -= 5
         if opponent_health <= 0:
             opponent_health = 0
