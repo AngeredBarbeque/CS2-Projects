@@ -1,4 +1,4 @@
-Name,Health,Strength,Defense,Speed,Class,Level,exp
-Silly,120,12,7,12,Mummified Dog,5,0
+Name,Health,Attack,Defense,Speed,Class,Level,EXP
 Jeffrey,100,10,4,15,Pig,5,0
 Purple Guy,100,10,4,15,Lawyer,5,0
+Silly,300,29,17,29,Mummified Dog,7,0

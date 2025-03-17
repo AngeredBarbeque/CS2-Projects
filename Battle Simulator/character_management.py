@@ -5,16 +5,18 @@ from InquirerPy import inquirer
 def create():
     while True:
         match = False
+        #Ensures the user picks a name no previous character has.
         name = input("What is the name of your character?\n")
         chars = get_chars()
         for i in chars:
             if i[0] == 'name':
                 print("Sorry, another character is already named that.\n")
                 continue
-        print("What class is your character?\n1:Mumified Dog: Boosted defense\nPreserve: Preserve yourself in a peat bog in order to boost your defense for 3 turns.\nAt Level 5: Arson: launch a flaming ball of swamp matter dealing damage that ignores defense.")
-        print("2:Lawyer: Boosted speed\nLawsuit: Sues the oppenent, inflicting them with crippling debt, which deals damage to them every turn.\nAt Level 5: Reverse Jury Nullification: Falsely convicts the oppenent, dealing considerable damage.")
-        print("3:Pig: Boosted strength\nCharge: Headbutts the oppenent, dealing damage with a chance to crit.\nAt Level 5: Eat Scraps: Eats a pile of trash in order to regain health.")
-        print('4:Exit')
+        #Prints class options, and then allows user to
+        print("What class is your character?\nMumified Dog: Boosted defense\nPreserve: Preserve yourself in a peat bog in order to boost your defense for 3 turns.\nAt Level 5: Arson: launch a flaming ball of swamp matter dealing damage that ignores defense.")
+        print("Lawyer: Boosted speed\nLawsuit: Sues the oppenent, inflicting them with crippling debt, which deals damage to them every turn.\nAt Level 5: Reverse Jury Nullification: Falsely convicts the oppenent, dealing considerable damage.")
+        print("Pig: Boosted strength\nCharge: Headbutts the oppenent, dealing damage with a chance to crit.\nAt Level 5: Eat Scraps: Eats a pile of trash in order to regain health.")
+        print('Exit')
         input_class = inquirer.select(
         message="Select a class:",
         choices=[
@@ -25,23 +27,15 @@ def create():
         ],
         default=None,
         ).execute()
-        if input_class == 'Mummified Dog':
-            char_class = 'Mummified Dog'
-        elif input_class == 'Lawyer':
-            char_class = 'Lawyer'
-        elif input_class == 'Pig':
-            char_class = 'Pig'
-        elif input_class == 'Exit':
+        if input_class == 'Exit':
             return
-        else:
-            print("Please enter 1, 2, 3 or 4.")
-            continue
         while True:
             #Verifies the character
-            print(f"{name} the {char_class}.\nIs that correct?")
+            print(f"{name} the {input_class}.\nIs that correct?")
             verify = input('y/n:').upper()
             if verify == 'Y':
-                save_char(name, char_class, 1, 0)
+                #Saves the character
+                save_char(name, input_class, 1, 0)
                 print("Character saved!")
                 return
             elif verify == 'N':
@@ -97,6 +91,7 @@ def char_select():
     for i in chars:
         names.append(i[0])
     try:
+        #Prints a list of all characters and makes the user select two.
         strchar_one = inquirer.select(
             message="Select a character:",
             choices=names.copy(),
@@ -109,7 +104,7 @@ def char_select():
             ).execute()
         if strchar_one == strchar_two:
             print("Please choose two seperate characters.")
-            char_select()
+            return False
         else:
             char_one = []
             char_two  =  []
@@ -128,34 +123,38 @@ def edit_char(char,exp_gain):
     chars = get_chars()
     selected = []
     for i in chars:
+        #Adds all but the selected character to a list
         if i[0] != char[0]:
             selected.append(i)
     with open('Battle Simulator/chars.csv', 'w',newline='') as file:
         csv_writer = csv.writer(file)
+        #Writes selected characters back onto the csv
         csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP'])
         for i in selected:
             csv_writer.writerow(i)
+        #Updates and then adds the character that needed updated
     char[7] = str(int(char[7]) + exp_gain)
     if int(char[7]) >= 100:
         char[7] = '0'
         char[6] = str(int(char[6]) + 1)
     save_char(char[0],char[5],char[6],char[7])
 
-#Rewrites the CSV file with al but the selected character.
-def delete_char(str_char):
-    chars = get_chars()
-    selected = []
-    for i in chars:
-        if i[0] != str_char:
-            selected.append(i)
-    with open('Battle Simulator/chars.csv', 'w',newline='') as file:
-        csv_writer = csv.writer(file)
-        csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP'])
-        for i in selected:
-            csv_writer.writerow(i)
-
 #Allows the user to remove a character
 def remove():
+
+    #Rewrites the CSV file with al but the selected character.
+    def delete_char(str_char):
+        chars = get_chars()
+        selected = []
+        for i in chars:
+            if i[0] != str_char:
+                selected.append(i)
+        with open('Battle Simulator/chars.csv', 'w',newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP'])
+            for i in selected:
+                csv_writer.writerow(i)
+
     chars = get_chars()
     names = []
     for i in chars:
