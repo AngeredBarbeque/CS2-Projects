@@ -134,9 +134,12 @@ def edit_char(char,exp_gain):
             csv_writer.writerow(i)
         #Updates and then adds the character that needed updated
     char[7] = str(int(char[7]) + exp_gain)
-    if int(char[7]) >= 100:
-        char[7] = '0'
-        char[6] = str(int(char[6]) + 1)
+    while True:
+        if int(char[7]) >= 100:
+            char[7] = int(char[7]) - 100
+            char[6] = str(int(char[6]) + 1)
+        else:
+            break
     save_char(char[0],char[5],char[6],char[7])
 
 #Allows the user to remove a character

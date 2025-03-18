@@ -55,7 +55,7 @@ def battle():
                 message = 'egging the house of celebrity Dwayne "The Rock" Johnson!'
             elif message_num == 5:
                 message = 'using radioactive canisters to cook food for customers!'
-            print(f"You sued your opponent for {message}")
+            print(f"You sued your opponent for {message}\n")
             #Uses char[8] to set status effect to true
             opponent[8] = True
             damage = 0
@@ -72,12 +72,12 @@ def battle():
                 message = 'illegal ownership of a panther named Ronald.'
             elif message_num == 5:
                 message = 'loitering.'
-            print(f"You falsely convicted your opponent of {message}")
+            print(f"You falsely convicted your opponent of {message}\n")
             damage = int(char[2]) * 2 - int(opponent[3])
         elif choice == 'Preserve':
             damage = 0
             char[3] = round(int(char[3]) * 1.2)
-            print("You preserve yourself, increasing your defense!")
+            print("You preserve yourself, increasing your defense!\n")
         elif choice == 'Arson':
             damage = int(char[2])
         if damage < 0:
@@ -86,10 +86,10 @@ def battle():
         opponent_health = opponent_health - int(damage)
         print(f"Your opponent took {damage} damage!\n")
         if opponent[8]:
-            print("Your opponent took 5 damage due to your lawsuit!")
+            print("Your opponent took 5 damage due to your lawsuit!\n")
             opponent_health -= 5
         if char[8]:
-            print("You took 5 damage due to your opponent's lawsuit!")
+            print("You took 5 damage due to your opponent's lawsuit!\n")
             health -= 5
         if opponent_health <= 0:
             opponent_health = 0
