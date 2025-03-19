@@ -1,6 +1,8 @@
 
 import csv
 from InquirerPy import inquirer
+import matplotlib.pyplot as mpl
+import numpy
 #Allows the user to create a character
 def create():
     while True:
@@ -168,3 +170,22 @@ def remove():
     default=None,
     ).execute()
     delete_char(char)
+
+def stat_bars(char):
+    mpl.style.use('_mpl-gallery')
+    #uses the stats of the provided character as the numbers for the bar heights.
+    #For some reason we need this 0.5, otherwise the graph starts in a weird way, cutting off part of the first one.
+    x = 0.5 + numpy.arange(4)
+    y = [int(char[1]), int(char[2]), int(char[3]), int(char[4])]
+    #Creates a figure and axis
+    fig, ax = mpl.subplots()
+    #Sets the visuals of the bars
+    ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7, label=['Health', 'Attack', 'Defense', 'Speed'])
+    #Arranges the axis
+    ax.set(xlim=(0, 8), xticks=numpy.arange(1, 8),
+           #Arrange is spelt wrong??
+        ylim=(0, 8), yticks=numpy.arange(1, 8))
+    #Displays the graph
+    mpl.show()
+chars = get_chars()
+stat_bars(chars[0])
