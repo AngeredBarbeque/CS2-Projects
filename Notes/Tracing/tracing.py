@@ -23,13 +23,15 @@
 
 # What is testing?
 
-    
+    #going through code and trying to break it
 
 # What are boundary conditions?
 
-
+    # User inputs that are strange, and may cause problems, highs, lows, or things most likely to be coded improperly.
 
 # How do you handle when users give strange inputs?
+
+    # try-except statements, conditionals, loops
 
 
 
