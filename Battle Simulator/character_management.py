@@ -86,7 +86,6 @@ def display_chars():
 #Returns a DataFrame with all the characters
 def get_chars_panda():
     chars = pandas.read_csv('Battle Simulator/chars.csv')
-    print(chars)
     return chars
 
 #Selects the two characters to battle

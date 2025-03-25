@@ -6,20 +6,18 @@ This project allows users to create characters from a list of 3 classes and then
 
 ## Installation
 ---
-1. Step one (Not just libraries, other important things)
-2. Step two
-3. Step three
-4. Etc  
+1. Download main.py, battle_management, chars.csv, character_management and put them in a folder called "Battle Simulator".
+2. Find a method of running python code.
+3. Run main.py in that method.
+4. Install all required libraries as detailed in the "Used Technologies" section.
 
 ## Excecution and Usage
 ---
-Short paragraph here, maybe a bulletted list using -, *, or +s.
-
-- item one
-- item two
-- item three
-
-![image](realtive link to your image NOTE: this means the image must be saved in your repository.)  
+- Run the main file
+- Use up and down arrows keys to navigate
+- Ensure that you have selected the terminal. To do so, click on the terminal.
+- Follow in game instructions.
+- If a crash occurs involving file paths, check that you have put all the needed files in a folder named "Battle Simulator".
 
 ## Used Technologies
 ---
@@ -50,7 +48,7 @@ Short paragraph here, maybe a bulletted list using -, *, or +s.
 
 ## Author's Info
 ---
-IDK
+I'm Nicholas Larsen, 14, and I go to Utah County Academy of Sciences. I want to major in computer science, although I dont know the specific field yet. I can be accessed through my email at smokerbaby3@gmail.com.
 
 ## Change Log
 ---

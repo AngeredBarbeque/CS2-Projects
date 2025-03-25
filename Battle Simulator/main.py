@@ -41,7 +41,7 @@ def main():
         elif choice == 'Generate random backstories':
             backstory, char = backstories()
             char['Backstory'] = backstory
-            #SYNC UP WITH OVERALL
+            edit_char(char, 0)
         elif choice == 'View overall character stats':
             stat_displays()
         elif choice == 'Exit':
