@@ -1,0 +1,33 @@
+       # Nicholas Larsen, Tracing Notes
+       
+       # What is tracing?
+       
+           #A debugging method that allows you to see things about your functions such as what called them, what they returned, etc.
+           # python -m trace --trace C:\Users\nick.larsen\Documents\CS2-Projects\Notes\Tracing\tracing.py
+       
+       # What are some ways we can debug by tracing?
+       
+       
+       
+       # How do you access the debugger in VS Code?
+       
+       
+       
+       # What is testing?
+       
+       
+       
+       # What are boundary conditions?
+       
+       
+       
+       # How do you handle when users give strange inputs?
+       
+    1: def add(num_one, num_two):
+    1:     return num_one + num_two
+       
+    1: def sub(num_one, num_two):
+    1:     return num_one - num_two
+       
+    1: print(add(3,102313))
+    1: print(sub(12, 4))
