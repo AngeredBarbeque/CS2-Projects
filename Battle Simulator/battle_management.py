@@ -1,25 +1,34 @@
 from character_management import *
 import random
+from faker import Faker
+from faker.providers import DynamicProvider
+#Creates a list that faker can use to generate a random animal from that list
+animals_provider = DynamicProvider(
+    provider_name='animal',
+    elements=['manatees', 'squirrels', 'elephants', 'rats', 'dingos', 'John Smith', 'blobfishes', 'ewoks', 'venus flytraps', 'dogs', 'cats']
+)
+fake = Faker()
+fake.add_provider(animals_provider)
 #Runs a battle, eventually returning the exp gain of the character that won
 def battle():
     def turn(char, opponent):
-        print(f"{char[0]}'s turn!")
-        health = int(char[1])
-        opponent_health = int(opponent[1])
-        print(f"{opponent[0]}'s health:\n{opponent_health}")
+        print(f"{char['Name']}'s turn!")
+        health = int(char['Health'])
+        opponent_health = int(opponent['Health'])
+        print(f"{opponent['Name']}'s health:\n{opponent_health}")
         print(f'Your health is:\n{health}')
         #Gives the player their abilities
-        if char[5] == 'Pig':
+        if char['Class'] == 'Pig':
             abilities = ['Headbutt']
-            if int(char[6]) >= 5:
+            if int(char['Level']) >= 5:
                 abilities.append('Eat Scraps')
-        elif char[5] == 'Lawyer':
+        elif char['Class'] == 'Lawyer':
             abilities = ['Lawsuit']
-            if int(char[6]) >= 5:
+            if int(char['Level']) >= 5:
                 abilities.append('Reverse Jury Nullification')
-        elif char[5] == 'Mummified Dog':
+        elif char['Class'] == 'Mummified Dog':
             abilities = ['Preserve']
-            if int(char[6]) >= 5:
+            if int(char['Level']) >= 5:
                 abilities.append('Arson')
         options = ['Normal Strike']
         for i in abilities:
@@ -31,13 +40,13 @@ def battle():
             ).execute()
         #Checks what the player does and then sets damage accordingly, and activates special effects.
         if choice == 'Normal Strike':
-            damage = int(char[2]) - int(opponent[3])
+            damage = int(char['Attack']) - int(opponent['Defense'])
         elif choice == 'Headbutt':
             if random.randint(1, 5) == 5:
                 print("Critical strike!")
-                damage = int(char[2]) * 3 - int(opponent[3])
+                damage = int(char['Attack']) * 3 - int(opponent['Defense'])
             else:
-                damage = int(char[2]) - int(opponent[3])
+                damage = int(char['Attack']) - int(opponent['Defense'])
         elif choice == 'Eat Scraps':
             health = round(health*1.2)
             print("You healed youself by eating scraps!")
@@ -63,32 +72,35 @@ def battle():
             message_num = random.randint(1, 5)
             #Chooses a reason to convict your opponent
             if message_num == 1:
-                message = 'feeding the squirrels next to an obvious "Dont Feed The Squirrels" sign.'
+                animal = fake.animal()
+                message = f'feeding the {animal} next to an obvious "Dont Feed The {animal.title()}" sign.'
             elif message_num == 2:
                 message = 'the murder of a 23 year old man named Terrence Smith.'
             elif message_num == 3:
                 message = 'stealing milk from the cartons in grocery carts.'
             elif message_num == 4:
-                message = 'illegal ownership of a panther named Ronald.'
+                name = fake.first_name()
+                animal = fake.animal()
+                message = f'illegal ownership of a {animal} named {name}.'
             elif message_num == 5:
                 message = 'loitering.'
             print(f"You falsely convicted your opponent of {message}\n")
-            damage = int(char[2]) * 2 - int(opponent[3])
+            damage = int(char['Attack']) * 2 - int(opponent['Defense'])
         elif choice == 'Preserve':
             damage = 0
-            char[3] = round(int(char[3]) * 1.2)
+            char[3] = round(int(char['Defense']) * 1.2)
             print("You preserve yourself, increasing your defense!\n")
         elif choice == 'Arson':
-            damage = int(char[2])
+            damage = int(char['Attack'])
         if damage < 0:
             damage = 0
         #Deals damage to your opponent, and applies lawsuit damage.
         opponent_health = opponent_health - int(damage)
         print(f"Your opponent took {damage} damage!\n")
-        if opponent[8]:
+        if opponent['Lawsuit']:
             print("Your opponent took 5 damage due to your lawsuit!\n")
             opponent_health -= 5
-        if char[8]:
+        if char['Lawsuit']:
             print("You took 5 damage due to your opponent's lawsuit!\n")
             health -= 5
         if opponent_health <= 0:
@@ -97,8 +109,8 @@ def battle():
         if health <= 0:
             health = 0
             return 'l'
-        char[1] = health
-        opponent[1] = opponent_health
+        char['Health'] = health
+        opponent['Health'] = opponent_health
         return [char, opponent]
     
     def play_turns(first, char_one, char_two):
@@ -107,13 +119,13 @@ def battle():
                 #Plays a turn, and if someone won, print a message and return the needed information
                 turn_one = turn(char_one, char_two)
                 if turn_one == 'w':
-                    exp = int(char_two[6]) * 20
-                    print(f'{char_one[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_two['Level']) * 20
+                    print(f'{char_one['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_one, exp]
                 
                 elif turn_one == 'l':
-                    exp = int(char_one[6]) * 20
-                    print(f'{char_two[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_one['Level']) * 20
+                    print(f'{char_two['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_two, exp]
                 
                 else:
@@ -122,12 +134,12 @@ def battle():
 
                 turn_two = turn(char_two, char_one)
                 if turn_two == 'w':
-                    exp = int(char_one[6]) * 20
-                    print(f'{char_two[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_one['Level']) * 20
+                    print(f'{char_two['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_two, exp]
                 elif turn_two == 'l':
-                    exp = int(char_two[6]) * 20
-                    print(f'{char_one[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_two['Level']) * 20
+                    print(f'{char_one['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_one, exp]
                 
                 else:
@@ -138,13 +150,13 @@ def battle():
             while True:
                 turn_one = turn(char_two, char_one)
                 if turn_one == 'w':
-                    exp = int(char_one[6]) * 20
-                    print(f'{char_two[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_one['Level']) * 20
+                    print(f'{char_two['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_two, exp]
                 
                 elif turn_one == 'l':
-                    exp = int(char_two[6]) * 20
-                    print(f'{char_one[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_two['Level']) * 20
+                    print(f'{char_one['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_one, exp]
 
                 else:
@@ -153,13 +165,13 @@ def battle():
 
                 turn_two = turn(char_one, char_two)
                 if turn_two == 'w':
-                    exp = int(char_two[6]) * 20
-                    print(f'{char_one[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_two['Level']) * 20
+                    print(f'{char_one['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_one, exp]
                 
                 elif turn_two== 'l':
-                    exp = int(char_one[6]) * 20
-                    print(f'{char_two[0]} won!\nThey have recieved {exp} experience points!')
+                    exp = int(char_one['Level']) * 20
+                    print(f'{char_two['Name']} won!\nThey have recieved {exp} experience points!')
                     return [char_two, exp]
                 
                 else:
@@ -171,14 +183,12 @@ def battle():
     #Ensures characters were selected properly.
     if characters:
         char_one = characters[0]
-        char_two =characters[1]
-        char_one.append(False)
-        char_two.append(False)
+        char_two = characters[1]
         #Chooses what order to play in
-        if int(char_one[4]) > int(char_two[4]):
+        if int(char_one['Speed']) > int(char_two['Speed']):
             [char, exp] = play_turns('one', char_one, char_two)
 
-        elif int(char_one[4]) < int(char_two[4]):
+        elif int(char_one['Speed']) < int(char_two['Speed']):
             [char, exp] = play_turns('two', char_one, char_two)
 
         else:

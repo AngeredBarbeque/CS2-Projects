@@ -3,15 +3,22 @@ import csv
 from InquirerPy import inquirer
 import matplotlib.pyplot as mpl
 import numpy
+import pandas
+from faker import Faker
+import random
+fake = Faker()
 #Allows the user to create a character
 def create():
     while True:
         match = False
         #Ensures the user picks a name no previous character has.
-        name = input("What is the name of your character?\n")
-        chars = get_chars()
-        for i in chars:
-            if i[0] == 'name':
+        name = input("What is the name of your character? If you would like to generate a random name, hit enter without typing anything.\n").strip()
+        if name == '':
+            name = fake.name()
+            print(f'Your character is now named: {name}.')
+        chars = get_chars_panda()
+        for i in chars.loc[:,'Name']:
+            if i == 'name':
                 print("Sorry, another character is already named that.\n")
                 continue
         #Prints class options, and then allows user to
@@ -71,27 +78,20 @@ def save_char(name, char_class, level, exp):
 
 #Displays all character currently in the list
 def display_chars():
-    chars = get_chars()
-    for i in chars:
-        print(f'\n{i[0]}:\nLevel:{i[6]}\nEXP:{i[7]}\nClass:{i[5]}\nHealth:{i[1]}\nStrength:{i[2]}')
-        print(f'Defense:{i[3]}\nSpeed:{i[4]}\n')
+    chars = get_chars_panda()
+    for idx, i in chars.iterrows():
+        print(f'\n{i["Name"]}:\nLevel:{i['Level']}\nEXP:{i['EXP']}\nClass:{i['Class']}\nHealth:{i['Health']}\nAttack:{i['Attack']}')
+        print(f'Defense:{i['Defense']}\nSpeed:{i['Speed']}\n')
 
-#Returns a list with all the characters
-def get_chars():
-    chars = []
-    with open('Battle Simulator\chars.csv', 'r') as file:
-        csv_reader = csv.reader(file)
-        next(csv_reader)
-        for i in csv_reader:
-            chars.append([i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7]])
+#Returns a DataFrame with all the characters
+def get_chars_panda():
+    chars = pandas.read_csv('Battle Simulator/chars.csv')
     return chars
 
 #Selects the two characters to battle
 def char_select():
-    chars = get_chars()
-    names = []
-    for i in chars:
-        names.append(i[0])
+    chars = get_chars_panda()
+    names = chars.loc[:,'Name']
     try:
         #Prints a list of all characters and makes the user select two.
         strchar_one = inquirer.select(
@@ -110,10 +110,11 @@ def char_select():
         else:
             char_one = []
             char_two  =  []
-            for i in chars:
-                if i[0] == strchar_one:
+            chars.insert(0, 'Lawsuit', False)
+            for idx, i in chars.iterrows():
+                if i['Name'] == strchar_one:
                     char_one = i.copy()
-                if i[0] == strchar_two:
+                if i['Name'] == strchar_two:
                     char_two = i.copy()
             return [char_one, char_two]
     except:
@@ -122,11 +123,11 @@ def char_select():
     
 #Rewrites the CSV file replacing the old character with the updated character
 def edit_char(char,exp_gain):
-    chars = get_chars()
+    chars = get_chars_panda()
     selected = []
-    for i in chars:
+    for idx, i in chars.iterrows():
         #Adds all but the selected character to a list
-        if i[0] != char[0]:
+        if i['Name'] != char['Name']:
             selected.append(i)
     with open('Battle Simulator/chars.csv', 'w',newline='') as file:
         csv_writer = csv.writer(file)
@@ -135,24 +136,24 @@ def edit_char(char,exp_gain):
         for i in selected:
             csv_writer.writerow(i)
         #Updates and then adds the character that needed updated
-    char[7] = str(int(char[7]) + exp_gain)
+    char['EXP'] = str(int(char['EXP']) + exp_gain)
     while True:
-        if int(char[7]) >= 100:
-            char[7] = int(char[7]) - 100
-            char[6] = str(int(char[6]) + 1)
+        if int(char['EXP']) >= 100:
+            char['EXP'] = int(char['EXP']) - 100
+            char['Level'] = str(int(char['Level']) + 1)
         else:
             break
-    save_char(char[0],char[5],char[6],char[7])
+    save_char(char['Name'],char['Class'],char['Level'],char['EXP'])
 
 #Allows the user to remove a character
 def remove():
 
-    #Rewrites the CSV file with al but the selected character.
+    #Rewrites the CSV file with all but the selected character.
     def delete_char(str_char):
-        chars = get_chars()
+        chars = get_chars_panda()
         selected = []
-        for i in chars:
-            if i[0] != str_char:
+        for idx, i in chars.iterrows():
+            if i['Name'] != str_char:
                 selected.append(i)
         with open('Battle Simulator/chars.csv', 'w',newline='') as file:
             csv_writer = csv.writer(file)
@@ -160,32 +161,116 @@ def remove():
             for i in selected:
                 csv_writer.writerow(i)
 
-    chars = get_chars()
-    names = []
-    for i in chars:
-        names.append(i[0])
+    chars = get_chars_panda()
+    names = chars.loc[:,'Name']
     char = inquirer.select(
-    message="Select a character:",
-    choices=names.copy(),
-    default=None,
-    ).execute()
+        message="Select a character:",
+        choices=names.copy(),
+        default=None,
+        ).execute()
     delete_char(char)
 
+#Displays a bar graph with character stats
 def stat_bars(char):
-    mpl.style.use('_mpl-gallery')
-    #uses the stats of the provided character as the numbers for the bar heights.
-    #For some reason we need this 0.5, otherwise the graph starts in a weird way, cutting off part of the first one.
-    x = 0.5 + numpy.arange(4)
-    y = [int(char[1]), int(char[2]), int(char[3]), int(char[4])]
-    #Creates a figure and axis
+    #Creates the plot basis
     fig, ax = mpl.subplots()
-    #Sets the visuals of the bars
-    ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7, label=['Health', 'Attack', 'Defense', 'Speed'])
-    #Arranges the axis
-    ax.set(xlim=(0, 8), xticks=numpy.arange(1, 8),
-           #Arrange is spelt wrong??
-        ylim=(0, 8), yticks=numpy.arange(1, 8))
+    #Sets the x and y values to be displayed
+    x = [f'Health ({char['Health']})', f'Attack ({char['Attack']})', f'Defense ({char['Defense']})', f'Speed ({char['Speed']})']
+    y = [int(char['Health'])/10, int(char['Attack']), int(char['Defense'])*2.5, int(char['Speed'])]
+    #creates bar graph using provided data
+    ax.bar(x, y)
+    #Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is much lower) 
+    #so the numbers would be confusing and are removed.
+    ax.set_yticklabels([])
+    #Titles it based on the character's name
+    ax.set_title(f"{char['Name']}'s Stats")
     #Displays the graph
     mpl.show()
-chars = get_chars()
-stat_bars(chars[0])
+
+def display_stat_bars():
+    print("\nThis will display a bar graph for your selected character.")
+    print("Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is much lower),")
+    print("true stat values are displayed next to the stat's name, while the bars represent the stat relative to your other stats.\n")
+    chars = get_chars_panda()
+    names = chars.loc[:,'Name']
+    name = inquirer.select(
+            message="Select a character:",
+            choices=names.copy(),
+            default=None,
+            ).execute()
+    for idx, i in chars.iterrows():
+        if i['Name'] == name:
+            stat_bars(i)
+            return
+        
+def backstories():
+    chars = get_chars_panda()
+    names = chars.loc[:,'Name']
+    name = inquirer.select(
+            message="Select a character:",
+            choices=names.copy(),
+            default=None,
+            ).execute()
+    for idx, i in chars.iterrows():
+        if i['Name'] == name:
+            print(f'{name} works at {fake.company()} as a {fake.job()}. As a child they wanted to be a(n) {fake.job()}. Their favorite number is {random.randint(-500, 500)},\n and their social security number is {fake.ssn()}')
+            return
+        
+def raw_stats(chars):
+    mean = round(chars.mean(numeric_only=True), 3)
+    print(f'Means across all characters:\nHealth: {mean['Health']}\nAttack: {mean['Attack']}\nDefense: {mean['Defense']}\nSpeed: {mean['Speed']}')
+    median = round(chars.median(numeric_only=True))
+    print(f'Medians across all characters:\nHealth: {median['Health']}\nAttack: {median['Attack']}\nDefense: {median['Defense']}\nSpeed: {median['Speed']}')
+    mode = round(chars.mode(numeric_only=True))
+    print(f'Modes across all characters:\nHealth: ')
+    for m in mode['Health']:
+        print(m, end = ', ')
+    print('\nAttack: ')
+    for m in mode['Attack']:
+        print(m, end = ', ')
+    print('\nDefense: ')
+    for m in mode['Defense']:
+        print(m, end = ', ')
+    print('\nSpeed: ')
+    for m in mode['Speed']:
+        print(m, end = ', ')
+    max = round(chars.max(numeric_only=True))
+    print(f'\nMaxima across all characters:\nHealth: {max['Health']}\nAttack: {max['Attack']}\nDefense: {max['Defense']}\nSpeed: {max['Speed']}')
+    min = round(chars.min(numeric_only=True))
+    print(f'Minima across all characters:\nHealth: {min['Health']}\nAttack: {min['Attack']}\nDefense: {min['Defense']}\nSpeed: {min['Speed']}')
+
+#Displays stats on plots gbc = group by class
+def plot_stats(col, gbc, chars):
+    if col == 'All':
+        chars.plot.box()
+    elif gbc == 'Yes':
+        chars.plot.box(column=col, by='Class')
+    else:
+        chars.plot.box(column=col)
+    mpl.show()
+
+def stat_displays():
+    chars = get_chars_panda()
+    choice = inquirer.select(
+        message="How would you like to view your characters' stats?",
+        choices=['Plots', 'Raw Data', 'Exit'],
+        default=None,
+        ).execute()
+    if choice == 'Plots':
+        gbc = 'No'
+        column = inquirer.select(
+            message="Which stat would you like to plot?",
+            choices=['Health', 'Attack', 'Defense', 'Speed', 'All'],
+            default=None,
+            ).execute()
+        if column != 'All':
+            gbc = inquirer.select(
+                message="Would you like to group by classes?",
+                choices=['Yes', 'No'],
+                default=None,
+                ).execute()
+        plot_stats(column, gbc, chars)
+    elif choice == 'Raw Data':
+        raw_stats(chars)
+    else:
+        return

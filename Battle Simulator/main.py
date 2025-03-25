@@ -16,6 +16,9 @@ def main():
             "View characters",
             'Battle',
             'Remove a character',
+            'View character stat charts',
+            'Generate random backstories',
+            'View overall character stats',
             "Exit",
         ],
         default=None,
@@ -33,6 +36,12 @@ def main():
             edit_char(char, exp_gain)
         elif choice == 'Remove a character':
             remove()
+        elif choice == 'View character stat charts':
+            display_stat_bars()
+        elif choice == 'Generate random backstories':
+            backstories()
+        elif choice == 'View overall character stats':
+            stat_displays()
         elif choice == 'Exit':
             exit()
 main()
