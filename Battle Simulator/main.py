@@ -39,7 +39,9 @@ def main():
         elif choice == 'View character stat charts':
             display_stat_bars()
         elif choice == 'Generate random backstories':
-            backstories()
+            backstory, char = backstories()
+            char['Backstory'] = backstory
+            #SYNC UP WITH OVERALL
         elif choice == 'View overall character stats':
             stat_displays()
         elif choice == 'Exit':

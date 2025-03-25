@@ -1,4 +1,5 @@
-Name,Health,Attack,Defense,Speed,Class,Level,EXP
-Bruce,100,10,6,10,Mummified Dog,5,0
-Janice,360,53,14,35,Pig,8,0
-Aaron,71113,6866,2759,10526,Lawyer,37,80
+Name,Health,Attack,Defense,Speed,Class,Level,EXP,Backstory
+Bruce,100,10,6,10,Mummified Dog,5,0,No Backstory
+Janice,360,53,14,35,Pig,8,0,No Backstory
+Aaron,71113,6866,2759,10526,Lawyer,37,80,No Backstory
+John,100,10,6,10,Mummified Dog,1,0,No Backstory

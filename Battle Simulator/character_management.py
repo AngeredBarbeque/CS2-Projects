@@ -44,7 +44,7 @@ def create():
             verify = input('y/n:').upper()
             if verify == 'Y':
                 #Saves the character
-                save_char(name, input_class, 1, 0)
+                save_char(name, input_class, 1, 0, 'No Backstory')
                 print("Character saved!")
                 return
             elif verify == 'N':
@@ -54,7 +54,7 @@ def create():
                 continue
 
 #Saves the character to the csv file
-def save_char(name, char_class, level, exp):
+def save_char(name, char_class, level, exp, backstory):
     health = 100
     strength = 10
     defense = 4
@@ -73,7 +73,7 @@ def save_char(name, char_class, level, exp):
         speed = round(speed * 1.2)
     with open('Battle Simulator/chars.csv', 'a',newline='') as file:
         csv_writer = csv.writer(file)
-        character  =  [name, health, strength, defense, speed, char_class, level, exp]
+        character  =  [name, health, strength, defense, speed, char_class, level, exp, backstory]
         csv_writer.writerow(character)
 
 #Displays all character currently in the list
@@ -81,11 +81,12 @@ def display_chars():
     chars = get_chars_panda()
     for idx, i in chars.iterrows():
         print(f'\n{i["Name"]}:\nLevel:{i['Level']}\nEXP:{i['EXP']}\nClass:{i['Class']}\nHealth:{i['Health']}\nAttack:{i['Attack']}')
-        print(f'Defense:{i['Defense']}\nSpeed:{i['Speed']}\n')
+        print(f'Defense:{i['Defense']}\nSpeed:{i['Speed']}\nBackstory:{i['Backstory']}')
 
 #Returns a DataFrame with all the characters
 def get_chars_panda():
     chars = pandas.read_csv('Battle Simulator/chars.csv')
+    print(chars)
     return chars
 
 #Selects the two characters to battle
@@ -132,7 +133,7 @@ def edit_char(char,exp_gain):
     with open('Battle Simulator/chars.csv', 'w',newline='') as file:
         csv_writer = csv.writer(file)
         #Writes selected characters back onto the csv
-        csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP'])
+        csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP','Backstory'])
         for i in selected:
             csv_writer.writerow(i)
         #Updates and then adds the character that needed updated
@@ -143,7 +144,7 @@ def edit_char(char,exp_gain):
             char['Level'] = str(int(char['Level']) + 1)
         else:
             break
-    save_char(char['Name'],char['Class'],char['Level'],char['EXP'])
+    save_char(char['Name'],char['Class'],char['Level'],char['EXP'],char['Backstory'])
 
 #Allows the user to remove a character
 def remove():
@@ -157,7 +158,7 @@ def remove():
                 selected.append(i)
         with open('Battle Simulator/chars.csv', 'w',newline='') as file:
             csv_writer = csv.writer(file)
-            csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP'])
+            csv_writer.writerow(['Name','Health','Attack','Defense','Speed','Class','Level','EXP','Backstory'])
             for i in selected:
                 csv_writer.writerow(i)
 
@@ -179,7 +180,7 @@ def stat_bars(char):
     y = [int(char['Health'])/10, int(char['Attack']), int(char['Defense'])*2.5, int(char['Speed'])]
     #creates bar graph using provided data
     ax.bar(x, y)
-    #Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is much lower) 
+    #Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is lower) 
     #so the numbers would be confusing and are removed.
     ax.set_yticklabels([])
     #Titles it based on the character's name
@@ -189,7 +190,7 @@ def stat_bars(char):
 
 def display_stat_bars():
     print("\nThis will display a bar graph for your selected character.")
-    print("Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is much lower),")
+    print("Because stats aren't on the same scales (ie. Health is much higher than the other stats and defense is lower),")
     print("true stat values are displayed next to the stat's name, while the bars represent the stat relative to your other stats.\n")
     chars = get_chars_panda()
     names = chars.loc[:,'Name']
@@ -207,14 +208,15 @@ def backstories():
     chars = get_chars_panda()
     names = chars.loc[:,'Name']
     name = inquirer.select(
-            message="Select a character:",
+            message="Select a character to generate a new backstory for:",
             choices=names.copy(),
             default=None,
             ).execute()
     for idx, i in chars.iterrows():
         if i['Name'] == name:
-            print(f'{name} works at {fake.company()} as a {fake.job()}. As a child they wanted to be a(n) {fake.job()}. Their favorite number is {random.randint(-500, 500)},\n and their social security number is {fake.ssn()}')
-            return
+            backstory = f'{name} works at {fake.company()} as a {fake.job()}. As a child they wanted to be a(n) {fake.job()}. Their favorite number is {random.randint(-500, 500)},\n and their social security number is {fake.ssn()}'
+            print(backstory)
+            return backstory, i 
         
 def raw_stats(chars):
     mean = round(chars.mean(numeric_only=True), 3)
