@@ -213,7 +213,7 @@ def backstories():
             ).execute()
     for idx, i in chars.iterrows():
         if i['Name'] == name:
-            backstory = f'{name} works at {fake.company()} as a {fake.job()}. As a child they wanted to be a(n) {fake.job()}. Their favorite number is {random.randint(-500, 500)},\n and their social security number is {fake.ssn()}'
+            backstory = f'{name} works at {fake.company()} as a(n) {fake.job()}. As a child they wanted to be a(n) {fake.job()}. Their favorite number is {random.randint(-500, 500)},\n and their social security number is {fake.ssn()}'
             print(backstory)
             return backstory, i 
         

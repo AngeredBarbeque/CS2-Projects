@@ -88,7 +88,7 @@ def battle():
             damage = int(char['Attack']) * 2 - int(opponent['Defense'])
         elif choice == 'Preserve':
             damage = 0
-            char[3] = round(int(char['Defense']) * 1.2)
+            char['Defense'] = round(int(char['Defense']) * 1.2)
             print("You preserve yourself, increasing your defense!\n")
         elif choice == 'Arson':
             damage = int(char['Attack'])
