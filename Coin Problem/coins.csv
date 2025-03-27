@@ -1,5 +1,5 @@
 Country,coin1,coin2,coin3,coin4,coin5,coin6,coin7,coin8,coin9
 USA,penny-1,nickel-5,dime-10,quarter-25,$1 bill-100,$5 bill-500,$10 bill-1000,$50 bill-5000,$100 bill-10000
-Türkiye,1 Kuruş coin-1,5 Kuruş coin,25 Kuruş coin-25,50 Kuruş coin-50,1 Lira Note-100,5 Lira Note-500,10 Lira Note-1000,50 Lira Note-5000,100 Lira Note-10000
 Eurozone,1c-1,5c-5,10c-10,20c-20,1 Euro Coin-100,5 Euro Note-500,10 Euro Note-1000,20 Euro Note-2000,50 Euro Note-5000
-Barbados,1 cent coin-1, 5 cent coin-5, 10 cent coin-10,25 cent coin-25,1 dollar coin-100,2 dollar note-200,5 dollar note-500,10 dollar note-1000,20 dollar noote-2000
+Türkiye,1 Kuruş coin-1,5 Kuruş coin-5,25 Kuruş coin-25,50 Kuruş coin-50,1 Lira Note-100,5 Lira Note-500,10 Lira Note-1000,50 Lira Note-5000,100 Lira Note-10000
+Barbados,1 cent coin-1,5 cent coin-5,10 cent coin-10,25 cent coin-25,1 dollar coin-100,2 dollar note-200,5 dollar note-500,10 dollar note-1000,20 dollar noote-2000
