@@ -17,7 +17,6 @@ def create():
             name = fake.name()
             print(f'Your character is now named: {name}.')
         chars = get_chars_panda()
-        print(chars)
         for i in chars.loc[:,'Name']:
             if i == 'name':
                 print("Sorry, another character is already named that.\n")

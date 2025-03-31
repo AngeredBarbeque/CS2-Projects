@@ -66,7 +66,7 @@ def battle():
                 message = 'using radioactive canisters to cook food for customers!'
             print(f"You sued your opponent for {message}\n")
             #Uses char[8] to set status effect to true
-            opponent[8] = True
+            opponent['Lawsuit'] = True
             damage = 0
         elif choice == 'Reverse Jury Nullification':
             message_num = random.randint(1, 5)
