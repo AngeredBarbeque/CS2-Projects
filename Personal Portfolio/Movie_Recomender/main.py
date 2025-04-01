@@ -164,7 +164,7 @@ def search(movies, filters):
             print("Please enter 1, 2, 3, or 4.\n")
 
 #a function allowing the user to view the list, use filters, or leave.
-def main():
+def movie_main():
     movies = []
     filters = []
     movies = read(movies)
@@ -176,10 +176,7 @@ def main():
         elif choice == '2':
             filters = search(movies, filters)
         elif choice == '3':
-            print("Goodbye!")
-            exit()
+            return
         else:
             print("Sorry, didn't get that.\n")
             continue
-
-main()

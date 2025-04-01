@@ -1,12 +1,12 @@
 #Imports needed libraries
 import csv
-from battle_management import *
-from character_management import *
+from Battle_Simulator.battle_management import *
+from Battle_Simulator.character_management import *
 import random
 from InquirerPy import inquirer
 
 #Uses inquirer py to allow the user to select an option
-def main():
+def battle_main():
     print("Hello! Welcome to your battle simulator! You can use this to create characters for you and your friends, and then have them battle each other!")
     while True:
         choice = inquirer.select(
@@ -45,5 +45,4 @@ def main():
         elif choice == 'View overall character stats':
             stat_displays()
         elif choice == 'Exit':
-            exit()
-main()
+            return

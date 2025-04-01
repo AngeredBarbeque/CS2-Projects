@@ -1,4 +1,4 @@
-from character_management import *
+from Battle_Simulator.character_management import *
 import random
 from faker import Faker
 from faker.providers import DynamicProvider

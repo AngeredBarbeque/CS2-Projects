@@ -97,7 +97,7 @@ def sync():
                     to_dos.append(i)
     return to_dos
 
-def main():
+def to_do_main():
     print("Welcome to your to-do list manager!")
     while True:
         to_dos = sync()
@@ -111,9 +111,6 @@ def main():
         elif choice == '4':
             view_tasks(to_dos)
         elif choice == '5':
-            print("Goodbye!")
-            exit()
+            return
         else:
             print("Please enter 1, 2, 3, 4, or 5.")
-
-main()
