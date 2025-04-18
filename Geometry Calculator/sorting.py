@@ -62,27 +62,30 @@ def sort_main(rects,tris,circs):
         for i in sorted:
             print(i)
     elif choice_one == 'Compare shapes':
-        while True:
-            shape_one = inq.select(
-                message = 'What is the first shape you would like to compare?',
-                choices = shapes
-            ).execute()
-            shape_two = inq.select(
-                message = 'What is the second shape you would like to compare?',
-                choices = shapes
-            ).execute()
-            if shape_one == shape_two:
-                print("Please select two different shapes.")
-                continue
-            choice_two = inq.select(
-                message = 'Compare by what?',
-                choices=['Perimeter','Area']
-            ).execute()
-            if choice_two == 'Perimeter':
-                result = comp_perim(shape_one,shape_two)
-            elif choice_two == 'Area':
-                result = comp_area(shape_one,shape_two)
-            print(f'{result}\nhas a higher {choice_two}')
-            break
+        if len(shapes) > 1:
+            while True:
+                shape_one = inq.select(
+                    message = 'What is the first shape you would like to compare?',
+                    choices = shapes
+                ).execute()
+                shape_two = inq.select(
+                    message = 'What is the second shape you would like to compare?',
+                    choices = shapes
+                ).execute()
+                if shape_one == shape_two:
+                    print("Please select two different shapes.")
+                    continue
+                choice_two = inq.select(
+                    message = 'Compare by what?',
+                    choices=['Perimeter/Circumfrence','Area']
+                ).execute()
+                if choice_two == 'Perimeter/Circumfrence':
+                    result = comp_perim(shape_one,shape_two)
+                elif choice_two == 'Area':
+                    result = comp_area(shape_one,shape_two)
+                print(f'{result}\nhas a higher {choice_two}')
+                break
+        else:
+            print("Please create more than one shape before comparing.")
     else:
         return
