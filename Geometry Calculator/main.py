@@ -1,6 +1,7 @@
 # Geometry Calculator Nicholas Larsen
 from shape_management import *
 from InquirerPy import inquirer as inq
+from sorting import *
 rects = []
 tris = []
 circs = []
@@ -23,7 +24,7 @@ def main():
             elif shape == 'Circle':
                 circs.append(make_circle())
         elif choice == 'Compare Existing Shapes':
-            pass
+            sort_main(rects,tris,circs)
         elif choice == 'Exit':
             exit()
 main()
