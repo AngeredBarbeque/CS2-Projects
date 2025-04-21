@@ -67,7 +67,7 @@ class circl:
         self.area = area
 
     def __str__(self):
-        return f'Shape: Circle\nRadius: {self.radius}\nCircumfrence: {self.circ}\nArea: {self.area}'
+        return f'Shape: Circle\nRadius: {self.radius}\nCircumfrence: {self.perimeter}\nArea: {self.area}'
 
     def perim_calc(self):
         return round((self.radius*2)*3.141592,4)
