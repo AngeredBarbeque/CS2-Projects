@@ -1,11 +1,19 @@
 from InquirerPy import inquirer as inq
-from InquirerPy.validator import EmptyInputValidator as EIV
+
+def number_input(message):
+    response = input(message+'\n')
+    try:
+        response = float(response)
+        return response
+    except:
+        print("Please enter a number.")
+        number_input(message)
 
 #Creates a class for rectangles
 class rect:
     def __init__(self,length,width,perimeter,area):
-        self.length = int(length)
-        self.width = int(width)
+        self.length = length
+        self.width = width
         self.perimeter = perimeter
         self.area = area
 
@@ -13,10 +21,10 @@ class rect:
         return f'Shape: Rectangle\nLength: {self.length}\nWidth: {self.width}\nPerimeter: {self.perimeter}\nArea: {self.area}'
 
     def perim_calc(self):
-        return (self.length + self.width) * 2
+        return round((self.length + self.width) * 2,4)
 
     def area_calc(self):
-        return self.length * self.width
+        return round(self.length * self.width,4)
     
 #Creates a rectangle subclass called square
 class square(rect):
@@ -27,18 +35,18 @@ class square(rect):
         return f'Shape: Rectangle\nLength: {self.length}\nWidth: {self.width}\nPerimeter: {self.perimeter}\nArea: {self.area}'
     
     def area_calc(self):
-        return self.length * self.length
+        return round(self.length * self.length,4)
 
     def perim_calc(self):
-        return 4*self.length
+        return round(4*self.length,4)
 
 #Creates a class for triangles
 class tri:
     def __init__(self,height,side_one,side_two,side_three,perimeter,area):
-        self.side_one = int(side_one)
-        self.side_two = int(side_two)
-        self.side_three = int(side_three)
-        self.height = int(height)
+        self.side_one = side_one
+        self.side_two = side_two
+        self.side_three = side_three
+        self.height = height
         self.perimeter = perimeter
         self.area = area
 
@@ -46,37 +54,31 @@ class tri:
         return f'Shape: Triangle\nSide Lengths: {self.side_one}, {self.side_two}, {self.side_three}\nHeight: {self.height}\nPerimeter: {self.perimeter}\nArea: {self.area}'
 
     def perim_calc(self):
-        return self.side_one + self.side_two + self.side_three
+        return round(self.side_one + self.side_two + self.side_three,4)
 
     def area_calc(self):
-        return self.side_one * self.height
+        return round(self.side_one * self.height,4)
 
 #Creates a class for circles
 class circl:
     def __init__(self,radius,perimeter,area):
-        self.radius = int(radius)
+        self.radius = radius
         self.perimeter = perimeter
         self.area = area
 
     def __str__(self):
-        return f'Shape: Circle\nRadius: {self.radius}\nCircumfrence: {self.circ}\nArea: {self.area}'
+        return f'Shape: Circle\nRadius: {self.radius}\nCircumfrence: {self.perimeter}\nArea: {self.area}'
 
     def perim_calc(self):
-        return round((self.radius*2)*3.141592,2)
+        return round((self.radius*2)*3.141592,4)
 
     def area_calc(self):
-        return round((self.radius * self.radius)*3.141592,2)
+        return round((self.radius * self.radius)*3.141592,4)
             
 #Creates a rectangle
 def make_rect():
-    length = inq.number(
-        message = 'How long is the rectangle?',
-        validate = EIV()
-    ).execute()
-    width = inq.number(
-        message = 'How wide is the rectangle?',
-        validate = EIV()
-    ).execute()
+    length = number_input('How long is the rectangle?')
+    width = number_input('How wide is the rectangle?')
     if width == length:
         rectangle = square(length,width,0,0)
     else:
@@ -88,22 +90,10 @@ def make_rect():
 
 #Creates a triangle
 def make_tri():
-    side_one = inq.number(
-        message = 'What is the length of the base of the triangle?',
-        validate = EIV()
-    ).execute()
-    side_two = inq.number(
-        message = 'What is the length of another side of the triangle?',
-        validate = EIV()
-    ).execute()
-    side_three = inq.number(
-        message = 'What is the length of the final side of the triangle?',
-        validate = EIV()
-    ).execute()
-    height =  inq.number(
-        message = 'What is the height of the triangle?',
-        validate  = EIV()
-    ).execute()
+    side_one = number_input('What is the length of the base of the triangle?')
+    side_two = number_input('What is the length of another side of the triangle?')
+    side_three = number_input('What is the length of the final side of the triangle?')
+    height = number_input('What is the height of the triangle?')
     triangle = tri(height,side_one,side_two,side_three,0,0)
     triangle.area = triangle.area_calc()
     triangle.perimeter = triangle.perim_calc()
@@ -112,10 +102,7 @@ def make_tri():
 
 #Creates a circle
 def make_circle():
-    rad = inq.number(
-        message = 'What is the radius of the circle?',
-        validate = EIV()
-    ).execute()
+    rad = number_input('What is the radius of the circle?')
     circle = circl(rad,0,0)
     circle.area = circle.area_calc()
     circle.perimeter = circle.perim_calc()
