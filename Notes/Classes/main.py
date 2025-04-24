@@ -30,7 +30,7 @@ class pokemon:
 
 #How do you create a python object?
 dracula = pokemon("Mr. Dracula","Charizard",32,10000)
-salad = pokemon('Salad',"Bulbasaur",10000,32)
+salad = pokemon('Mrs. Dracula',"Bulbasaur",10000,32)
 print(dracula)
 
 #How to you call a method for an object?
